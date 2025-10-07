@@ -1,56 +1,41 @@
 import 'package:flutter/material.dart';
-
-// --- MODELOS DE DATOS ---
-
-// Modelo de datos para las categorías
-class Category {
-  final String title;
-  final String imageUrl; // Usamos URL para simular la imagen
-  const Category({required this.title, required this.imageUrl});
-}
-
-// Modelo de datos para los productos
-class Product {
-  final String name;
-  final String description;
-  final String priceBs;
-  final String oldPriceBs;
-  final double rating;
-  final int reviews;
-  final String imageUrl;
-  final String badge; // Ej: 'Nuevo' o '-20%'
-
-  const Product({
-    required this.name,
-    required this.description,
-    required this.priceBs,
-    required this.oldPriceBs,
-    required this.rating,
-    required this.reviews,
-    required this.imageUrl,
-    required this.badge,
-  });
-}
+import '../models/category.dart';
+import '../models/product.dart';
+import '../widgets/category_square_card.dart';
 
 // --- DATOS DE EJEMPLO ---
-
 const List<Category> _categories = [
   Category(
     title: 'Frutas y Verduras',
-    imageUrl: 'https://placehold.co/100x100/A5D6A7/ffffff?text=Frutas', // Green
+    imageUrl: 'assets/images/categorias/FrutasVerduras.png',
   ),
   Category(
     title: 'Carnes y Pescados',
-    imageUrl: 'https://placehold.co/100x100/EF9A9A/ffffff?text=Carnes', // Red
+    imageUrl: 'assets/images/categorias/CarnesPescados.png',
   ),
   Category(
     title: 'Lácteos y Huevos',
-    imageUrl: 'https://placehold.co/100x100/90CAF9/ffffff?text=Lácteos', // Blue
+    imageUrl: 'assets/images/categorias/Lacteos.png',
   ),
-  // Añadimos más para el scroll horizontal
   Category(
     title: 'Panadería',
-    imageUrl: 'https://placehold.co/100x100/C59F74/ffffff?text=Pan', // Brown
+    imageUrl: 'assets/images/categorias/panaderia.png',
+  ),
+  Category(
+    title: 'Despensa',
+    imageUrl: 'assets/images/categorias/Despensa.png',
+  ),
+  Category(
+    title: ' Bebidas',
+    imageUrl: 'assets/images/categorias/Bebidas.png',
+  ),
+  Category(
+    title: 'Limpieza',
+    imageUrl: 'assets/images/categorias/Limpieza.png',
+  ),
+  Category(
+    title: 'Cuidado Personal',
+    imageUrl: 'assets/images/categorias/CuidadoPersonal.png',
   ),
 ];
 
@@ -62,7 +47,7 @@ const List<Product> _products = [
     oldPriceBs: '22 Bs',
     rating: 4.5,
     reviews: 128,
-    imageUrl: 'https://placehold.co/300x200/F44336/ffffff?text=Producto+Limpieza', // Red image
+    imageUrl: 'https://placehold.co/300x200/F44336/ffffff?text=Producto+Limpieza',
     badge: 'Nuevo 20%',
   ),
   Product(
@@ -72,7 +57,7 @@ const List<Product> _products = [
     oldPriceBs: '45 Bs',
     rating: 4.8,
     reviews: 210,
-    imageUrl: 'https://placehold.co/300x200/F44336/ffffff?text=Producto+Aseo', // Red image
+    imageUrl: 'https://placehold.co/300x200/F44336/ffffff?text=Producto+Aseo',
     badge: 'Oferta 30%',
   ),
 ];
@@ -80,63 +65,7 @@ const List<Product> _products = [
 
 // --- WIDGETS REUTILIZABLES ---
 
-// 1. Tarjeta de Categoría (con Imagen Circular)
-class CategoryChip extends StatelessWidget {
-  final Category category;
-  final Color primaryColor;
 
-  const CategoryChip({
-    super.key,
-    required this.category,
-    required this.primaryColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100, // Ancho fijo de la tarjeta
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200, width: 1),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Imagen/Icono Circular
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50.0),
-            child: Image.network(
-              category.imageUrl,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Icon(Icons.shopping_basket_rounded, size: 50, color: primaryColor), // Fallback
-            ),
-          ),
-          const SizedBox(height: 8),
-          
-          // Título
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Text(
-              category.title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey.shade800,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 // 2. Tarjeta de Producto (Promociones/Destacados)
 class ProductCard extends StatelessWidget {
@@ -408,14 +337,22 @@ class HomeScreen extends StatelessWidget {
               // SECCIÓN DE CATEGORÍAS
               _buildSectionTitle('Categorías'),
               SizedBox(
-                height: 100, 
-                child: ListView.builder(
+                height: 140,
+                child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   itemCount: _categories.length,
+                  separatorBuilder: (context, index) => const SizedBox(width: 0),
                   itemBuilder: (context, index) {
                     final category = _categories[index];
-                    return CategoryChip(category: category, primaryColor: primaryColor);
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: CategorySquareCard(
+                        title: category.title,
+                        imageUrl: category.imageUrl,
+                        primaryColor: primaryColor,
+                      ),
+                    );
                   },
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/category_square_card.dart';
 
 // --- MODELOS DE DATOS ---
 
@@ -37,66 +38,7 @@ final List<String> _filters = [
 
 // --- WIDGETS DE EXPLORACIÓN ---
 
-// Tarjeta para mostrar la categoría en la grilla
-class CategoryGridCard extends StatelessWidget {
-  final ExploreCategory category;
-  final Color primaryColor;
 
-  const CategoryGridCard({
-    super.key,
-    required this.category,
-    required this.primaryColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15.0),
-        border: Border.all(color: Colors.grey.shade100),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.08),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: category.color.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              category.icon,
-              color: category.color,
-              size: 30,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              category.title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 // Pantalla principal de Explorar
 class ExploreScreen extends StatelessWidget {
@@ -182,7 +124,13 @@ class ExploreScreen extends StatelessWidget {
               itemCount: _categories.length,
               itemBuilder: (context, index) {
                 final category = _categories[index];
-                return CategoryGridCard(category: category, primaryColor: primaryColor);
+                return CategorySquareCard(
+                  title: category.title,
+                  icon: category.icon,
+                  iconColor: category.color,
+                  circleBackground: category.color.withOpacity(0.1),
+                  primaryColor: primaryColor,
+                );
               },
             ),
           ),
