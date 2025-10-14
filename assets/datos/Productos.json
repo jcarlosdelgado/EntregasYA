@@ -1,0 +1,118 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "name": "Manzanas Rojas",
+      "description": "Manzanas rojas frescas y crujientes, perfectas para snacks saludables.",
+      "price": 1.50,
+      "oldPrice": 2.25,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.3,
+      "reviews": 128,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToksvFu8lSKMLjI-vKpNr0hAAXXWX_mv4PGA&s",
+      "badge": "Nuevo 20%",
+      "category": "frutas-verduras"
+    },
+    {
+      "id": 2,
+      "name": "Detergente Líquido",
+      "description": "Limpieza profunda, elimina manchas difíciles. Ideal para ropa de color.",
+      "price": 35.00,
+      "oldPrice": 45.00,
+      "currency": "Bs",
+      "unit": "por unidad",
+      "rating": 4.8,
+      "reviews": 210,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO4HjoJc68_27oDWM-bkEbNSxHMVWBRkD0_Q&s",
+      "badge": "Oferta 30%",
+      "category": "limpieza"
+    },
+    {
+      "id": 3,
+      "name": "Leche Entera",
+      "description": "Leche fresca entera, rica en calcio y proteínas naturales.",
+      "price": 8.50,
+      "oldPrice": 12.00,
+      "currency": "Bs",
+      "unit": "por litro",
+      "rating": 4.6,
+      "reviews": 89,
+      "imageUrl": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+      "badge": "Oferta 25%",
+      "category": "lacteos"
+    },
+    {
+      "id": 4,
+      "name": "Pan Integral",
+      "description": "Pan integral artesanal, rico en fibra y sin conservantes artificiales.",
+      "price": 6.00,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por unidad",
+      "rating": 4.4,
+      "reviews": 156,
+      "imageUrl": "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400",
+      "badge": "Fresco",
+      "category": "panaderia"
+    },
+    {
+      "id": 5,
+      "name": "Pollo Fresco",
+      "description": "Pollo fresco de granja, sin hormonas ni antibióticos.",
+      "price": 18.50,
+      "oldPrice": 22.00,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.7,
+      "reviews": 203,
+      "imageUrl": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400",
+      "badge": "Fresco 15%",
+      "category": "carnes"
+    },
+    {
+      "id": 6,
+      "name": "Tomates Cherry",
+      "description": "Tomates cherry dulces y jugosos, perfectos para ensaladas.",
+      "price": 12.00,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.2,
+      "reviews": 74,
+      "imageUrl": "https://images.unsplash.com/photo-1546470427-e026e37b48e8?w=400",
+      "badge": "Orgánico",
+      "category": "frutas-verduras"
+    }
+  ],
+  "promociones": [
+    {
+      "id": 1,
+      "name": "Combo Limpieza",
+      "description": "Kit completo de productos de limpieza para el hogar.",
+      "price": 89.90,
+      "oldPrice": 120.00,
+      "currency": "Bs",
+      "unit": "por combo",
+      "rating": 4.9,
+      "reviews": 45,
+      "imageUrl": "https://images.unsplash.com/photo-1563453392212-326d32d2d3c4?w=400",
+      "badge": "Súper Oferta 25%",
+      "category": "limpieza"
+    },
+    {
+      "id": 2,
+      "name": "Canasta Frutas",
+      "description": "Selección premium de frutas frescas de temporada.",
+      "price": 28.50,
+      "oldPrice": 35.00,
+      "currency": "Bs",
+      "unit": "por canasta",
+      "rating": 4.6,
+      "reviews": 92,
+      "imageUrl": "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400",
+      "badge": "Especial 20%",
+      "category": "frutas-verduras"
+    }
+  ]
+}
