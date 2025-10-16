@@ -68,6 +68,9 @@ flutter:
     - assets/images/categorias/CuidadoPersonal.png
     - assets/images/categorias/panaderia.png
     - assets/datos/Productos.json
+    - assets/datos/Categorias.json
+    - assets/carrito-de-compras.png
+    - assets/noisePainter.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

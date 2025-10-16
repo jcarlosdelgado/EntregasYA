@@ -1,3 +1,16 @@
+class ProductCategory {
+  final int id;
+  final String title;
+  const ProductCategory({required this.id, required this.title});
+
+  factory ProductCategory.fromJson(Map<String, dynamic> json) {
+    return ProductCategory(
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+}
+
 class Product {
   final int id;
   final String name;
@@ -10,7 +23,7 @@ class Product {
   final int reviews;
   final String imageUrl;
   final String badge;
-  final String category;
+  final ProductCategory category;
 
   const Product({
     required this.id,
@@ -32,15 +45,15 @@ class Product {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      price: json['price'].toDouble(),
-      oldPrice: json['oldPrice'].toDouble(),
+      price: (json['price'] as num).toDouble(),
+      oldPrice: (json['oldPrice'] as num).toDouble(),
       currency: json['currency'],
       unit: json['unit'],
-      rating: json['rating'].toDouble(),
+      rating: (json['rating'] as num).toDouble(),
       reviews: json['reviews'],
       imageUrl: json['imageUrl'],
       badge: json['badge'],
-      category: json['category'],
+      category: ProductCategory.fromJson(json['category']),
     );
   }
 

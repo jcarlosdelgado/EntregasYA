@@ -23,21 +23,22 @@ class CustomHeader extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: Alignment(0, -1), 
+          end: Alignment(0, 1),
           colors: [
-            Color(0xFFFF825A), // FF825A
-            Color(0xFFFB6839), // FB6839
+            Color(0xFFFF825A), 
+            Color.fromARGB(255, 250, 108, 56), 
           ],
+          stops: [0.0, 1.0],
         ),
         borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20),
+          bottom: Radius.circular(25),
         ),
       ),
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 10.0, top: 8.0),
           child: Column(
             children: [
               // Header superior con título y carrito
@@ -56,7 +57,7 @@ class CustomHeader extends StatelessWidget {
                         title,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 32,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -65,31 +66,43 @@ class CustomHeader extends StatelessWidget {
                   GestureDetector(
                     onTap: onCartTapped,
                     child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                          size: 24,
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/carrito-de-compras.png',
+                              width: 22,
+                              height: 22,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
                         if (cartItemCount > 0)
                           Positioned(
-                            right: 0,
-                            top: 0,
+                            right: -2,
+                            top: -2,
                             child: Container(
-                              padding: const EdgeInsets.all(2),
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: const BoxDecoration(
-                                color: Colors.white,
+                                color: Color(0xFFFFB300), // Naranja
                                 shape: BoxShape.circle,
                               ),
                               constraints: const BoxConstraints(
-                                minWidth: 16,
-                                minHeight: 16,
+                                minWidth: 20,
+                                minHeight: 20,
                               ),
                               child: Text(
                                 cartItemCount.toString(),
                                 style: const TextStyle(
-                                  color: Color(0xFFFB6839),
-                                  fontSize: 10,
+                                  color: Colors.white,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 textAlign: TextAlign.center,
@@ -103,7 +116,7 @@ class CustomHeader extends StatelessWidget {
               ),
               
               if (showSearchBar) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: 5),
                 // Barra de búsqueda
                 Container(
                   decoration: BoxDecoration(

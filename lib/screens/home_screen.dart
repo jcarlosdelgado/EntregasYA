@@ -6,42 +6,10 @@ import '../models/product.dart';
 import '../widgets/category_square_card.dart';
 import '../widgets/product_card.dart';
 import '../widgets/custom_header.dart';
+import 'category_products_screen.dart';
 
 // --- DATOS DE EJEMPLO ---
-const List<Category> _categories = [
-  Category(
-    title: 'Frutas y Verduras',
-    imageUrl: 'assets/images/categorias/FrutasVerduras.png',
-  ),
-  Category(
-    title: 'Carnes y Pescados',
-    imageUrl: 'assets/images/categorias/CarnesPescados.png',
-  ),
-  Category(
-    title: 'Lácteos y Huevos',
-    imageUrl: 'assets/images/categorias/Lacteos.png',
-  ),
-  Category(
-    title: 'Panadería',
-    imageUrl: 'assets/images/categorias/panaderia.png',
-  ),
-  Category(
-    title: 'Despensa',
-    imageUrl: 'assets/images/categorias/Despensa.png',
-  ),
-  Category(
-    title: ' Bebidas',
-    imageUrl: 'assets/images/categorias/Bebidas.png',
-  ),
-  Category(
-    title: 'Limpieza',
-    imageUrl: 'assets/images/categorias/Limpieza.png',
-  ),
-  Category(
-    title: 'Cuidado Personal',
-    imageUrl: 'assets/images/categorias/CuidadoPersonal.png',
-  ),
-];
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Category> _categories = [];
   List<Product> _products = [];
   List<Product> _promociones = [];
   bool _isLoading = true;
@@ -58,28 +27,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _loadProducts();
+    _loadData();
   }
 
-  Future<void> _loadProducts() async {
+  Future<void> _loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/datos/Productos.json');
-      final data = json.decode(response);
-      
+      // Cargar categorías
+      final String catResponse = await rootBundle.loadString('assets/datos/Categorias.json');
+      final catData = json.decode(catResponse);
+    final categories = (catData['categorias'] as List)
+      .map((item) => Category.fromJson(item))
+      .toList();
+
+      // Cargar productos
+      final String prodResponse = await rootBundle.loadString('assets/datos/Productos.json');
+      final prodData = json.decode(prodResponse);
+      final products = (prodData['productos'] as List)
+          .map((item) => Product.fromJson(item))
+          .toList();
+      final promociones = (prodData['promociones'] as List)
+          .map((item) => Product.fromJson(item))
+          .toList();
+
       setState(() {
-        _products = (data['productos'] as List)
-            .map((item) => Product.fromJson(item))
-            .toList();
-        _promociones = (data['promociones'] as List)
-            .map((item) => Product.fromJson(item))
-            .toList();
+        _categories = categories;
+        _products = products;
+        _promociones = promociones;
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
-      debugPrint('Error loading products: $e');
+      debugPrint('Error loading data: $e');
     }
   }
 
@@ -140,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 24),
-                      
                       // SECCIÓN DE CATEGORÍAS
                       _buildSectionTitle('Categorías'),
                       SizedBox(
@@ -154,10 +133,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             final category = _categories[index];
                             return Padding(
                               padding: const EdgeInsets.only(right: 16),
-                              child: CategorySquareCard(
-                                title: category.title,
-                                imageUrl: category.imageUrl,
-                                primaryColor: primaryColor,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CategoryProductsScreen(
+                                        categoryId: category.id,
+                                        categoryTitle: category.title,
+                                        categoryImageUrl: category.imageUrl,
+                                        products: _products,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: CategorySquareCard(
+                                  title: category.title,
+                                  imageUrl: category.imageUrl,
+                                  primaryColor: primaryColor,
+                                ),
                               ),
                             );
                           },
@@ -180,7 +174,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      
                       // SECCIÓN DE PRODUCTOS DESTACADOS
                       _buildSectionTitle(
                         'Productos Destacados', 
