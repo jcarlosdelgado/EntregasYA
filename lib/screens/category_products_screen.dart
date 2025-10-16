@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../models/category.dart';
@@ -165,12 +164,12 @@ class CategoryProductsScreen extends StatelessWidget {
                     ),
                   )
                 : GridView.builder(
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, 
-                      childAspectRatio: 0.40, 
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 10, 
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), // padding simétrico
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 240,
+                      childAspectRatio: 0.45,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
                     ),
                     itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
@@ -178,6 +177,8 @@ class CategoryProductsScreen extends StatelessWidget {
                       return ProductCard(
                         product: product,
                         primaryColor: Colors.deepOrange,
+                        // Nuevo: sin margen lateral derecho en grilla
+                        margin: const EdgeInsets.only(bottom: 8), // solo margen inferior
                         onTap: () {
                           // Aquí puedes navegar a la pantalla de detalle del producto
                           debugPrint('Producto seleccionado: ${product.name}');

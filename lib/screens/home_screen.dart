@@ -169,11 +169,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: _promociones.length,
                           itemBuilder: (context, index) {
                             final product = _promociones[index];
-                            return ProductCard(product: product, primaryColor: primaryColor);
+                            return ProductCard(
+                              product: product,
+                              primaryColor: primaryColor,
+                              width: 200, // ancho fijo para scroll horizontal
+                            );
                           },
                         ),
                       ),
                       const SizedBox(height: 24),
+
                       // SECCIÓN DE PRODUCTOS DESTACADOS
                       _buildSectionTitle(
                         'Productos Destacados', 
@@ -187,7 +192,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: _products.length,
                           itemBuilder: (context, index) {
                             final product = _products[index];
-                            return ProductCard(product: product, primaryColor: primaryColor);
+                            return ProductCard(
+                              product: product,
+                              primaryColor: primaryColor,
+                              width: 200, // ancho fijo para scroll horizontal
+                            );
                           },
                         ),
                       ),

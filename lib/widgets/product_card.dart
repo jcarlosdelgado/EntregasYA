@@ -6,6 +6,9 @@ class ProductCard extends StatelessWidget {
   final Color primaryColor;
   final VoidCallback? onTap;
   final VoidCallback? onAddToCart;
+  // Nuevo: ancho opcional para listas horizontales; en grillas se omite.
+  final double? width;
+  final EdgeInsetsGeometry? margin; // nuevo
 
   const ProductCard({
     super.key,
@@ -13,6 +16,8 @@ class ProductCard extends StatelessWidget {
     required this.primaryColor,
     this.onTap,
     this.onAddToCart,
+    this.width, // ...nuevo...
+    this.margin, // nuevo
   });
 
   @override
@@ -20,8 +25,9 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 200,
-        margin: const EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0), 
+        // ...existing code...
+        width: width, // usar ancho solo si se especifica; en grilla será null y usará el ancho de la celda
+        margin: margin ?? const EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0), // usa el margen pasado o el original
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16.0),
@@ -121,29 +127,34 @@ class ProductCard extends StatelessWidget {
                     ),
                     
                     const SizedBox(height: 6),
-                    
-                    // Rating con estrellas
-                    Row(
-                      children: [
-                        ...List.generate(5, (index) {
-                          return Icon(
-                            index < product.rating.floor()
-                                ? Icons.star_rounded
-                                : (index < product.rating ? Icons.star_half_rounded : Icons.star_outline_rounded),
-                            color: Colors.amber.shade600,
-                            size: 16,
-                          );
-                        }),
-                        const SizedBox(width: 6),
-                        Text(
-                          '(${product.rating})',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
+
+                    // Rating con estrellas (envuelto en FittedBox para escalar levemente si falta ancho)
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ...List.generate(5, (index) {
+                            return Icon(
+                              index < product.rating.floor()
+                                  ? Icons.star_rounded
+                                  : (index < product.rating ? Icons.star_half_rounded : Icons.star_outline_rounded),
+                              color: Colors.amber.shade600,
+                              size: 16,
+                            );
+                          }),
+                          const SizedBox(width: 6),
+                          Text(
+                            '(${product.rating})',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     
                     const SizedBox(height: 8),
@@ -226,19 +237,22 @@ class ProductCard extends StatelessWidget {
                     
                     const SizedBox(height: 5),
                     
-                    // Descripción
-                    Text(
-                      product.description,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                        height: 1.3,
+                    // Descripción ahora Flexible para evitar overflow vertical
+                    Flexible(
+                      child: Text(
+                        product.description,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                          height: 1.3,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    
-                    const SizedBox(height: 12),
+
+                    // Espacio inferior ligeramente reducido
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
