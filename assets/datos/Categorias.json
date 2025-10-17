@@ -1,0 +1,44 @@
+{
+  "categorias": [
+    {
+      "id": 1,
+      "title": "Frutas y Verduras",
+      "imageUrl": "assets/images/categorias/FrutasVerduras.png"
+    },
+    {
+      "id": 2,
+      "title": "Carnes y Pescados",
+      "imageUrl": "assets/images/categorias/CarnesPescados.png"
+    },
+    {
+      "id": 3,
+      "title": "Lácteos y Huevos",
+      "imageUrl": "assets/images/categorias/Lacteos.png"
+    },
+    {
+      "id": 4,
+      "title": "Panadería",
+      "imageUrl": "assets/images/categorias/panaderia.png"
+    },
+    {
+      "id": 5,
+      "title": "Despensa",
+      "imageUrl": "assets/images/categorias/Despensa.png"
+    },
+    {
+      "id": 6,
+      "title": "Bebidas",
+      "imageUrl": "assets/images/categorias/Bebidas.png"
+    },
+    {
+      "id": 7,
+      "title": "Limpieza",
+      "imageUrl": "assets/images/categorias/Limpieza.png"
+    },
+    {
+      "id": 8,
+      "title": "Cuidado Personal",
+      "imageUrl": "assets/images/categorias/CuidadoPersonal.png"
+    }
+  ]
+}

@@ -1,0 +1,397 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "name": "Manzanas Rojas",
+      "description": "Manzanas rojas frescas y crujientes, perfectas para snacks saludables.",
+      "price": 15.50,
+      "oldPrice": 18.00,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.3,
+      "reviews": 128,
+      "imageUrl": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+      "badge": "Fresco",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bananas",
+      "description": "Bananas maduras y dulces, ricas en potasio y energía natural.",
+      "price": 8.50,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.1,
+      "reviews": 89,
+      "imageUrl": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400",
+      "badge": "",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Carne de Res Premium",
+      "description": "Corte premium de carne de res, tierna y jugosa para asados especiales.",
+      "price": 75.00,
+      "oldPrice": 85.00,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.8,
+      "reviews": 156,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8OLee0Gvg9Pygafog2irZg44mPkeqigfHtw&ss",
+      "badge": "Premium",
+      "category": {
+        "id": 2,
+        "title": "Carnes y Pescados"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Salmón Fresco",
+      "description": "Filete de salmón fresco del Atlántico, rico en omega-3.",
+      "price": 120.00,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.9,
+      "reviews": 67,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3ys-iqse1MCxmT-kRcyLWEkIO4wAwCDLnKQ&s",
+      "badge": "Fresco",
+      "category": {
+        "id": 2,
+        "title": "Carnes y Pescados"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Leche Entera PIL",
+      "description": "Leche fresca entera PIL, rica en calcio y proteínas naturales.",
+      "price": 8.50,
+      "oldPrice": 10.00,
+      "currency": "Bs",
+      "unit": "por litro",
+      "rating": 4.6,
+      "reviews": 234,
+      "imageUrl": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+      "badge": "Oferta",
+      "category": {
+        "id": 3,
+        "title": "Lácteos y Huevos"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Queso Mozzarella",
+      "description": "Queso mozzarella fresco, perfecto para pizzas y ensaladas.",
+      "price": 25.00,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por 500g",
+      "rating": 4.4,
+      "reviews": 78,
+      "imageUrl": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+      "badge": "",
+      "category": {
+        "id": 3,
+        "title": "Lácteos y Huevos"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Pan Francés",
+      "description": "Pan francés crujiente recién horneado, ideal para el desayuno.",
+      "price": 4.50,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por unidad",
+      "rating": 4.2,
+      "reviews": 189,
+      "imageUrl": "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400",
+      "badge": "Fresco",
+      "category": {
+        "id": 4,
+        "title": "Panadería"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Croissants",
+      "description": "Croissants de mantequilla artesanales, perfectos para el desayuno.",
+      "price": 12.00,
+      "oldPrice": 15.00,
+      "currency": "Bs",
+      "unit": "por 6 unidades",
+      "rating": 4.7,
+      "reviews": 92,
+      "imageUrl": "https://www.restauracioncolectiva.com/storage/FotoNota/croissant_origen.webp_1.webp",
+      "badge": "Artesanal",
+      "category": {
+        "id": 4,
+        "title": "Panadería"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Arroz Premium",
+      "description": "Arroz grano largo premium, ideal para todo tipo de comidas.",
+      "price": 18.00,
+      "oldPrice": 22.00,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.5,
+      "reviews": 145,
+      "imageUrl": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
+      "badge": "Premium",
+      "category": {
+        "id": 5,
+        "title": "Despensa"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Aceite de Oliva Extra",
+      "description": "Aceite de oliva extra virgen importado, ideal para ensaladas.",
+      "price": 45.00,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por 500ml",
+      "rating": 4.8,
+      "reviews": 87,
+      "imageUrl": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400",
+      "badge": "Extra Virgen",
+      "category": {
+        "id": 5,
+        "title": "Despensa"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Coca Cola",
+      "description": "Refresco Coca Cola clásico, refrescante y burbujeante.",
+      "price": 6.50,
+      "oldPrice": 8.00,
+      "currency": "Bs",
+      "unit": "por 2L",
+      "rating": 4.3,
+      "reviews": 312,
+      "imageUrl": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=400",
+      "badge": "Oferta",
+      "category": {
+        "id": 6,
+        "title": "Bebidas"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Agua Mineral Vital",
+      "description": "Agua mineral natural Vital, pura y refrescante.",
+      "price": 3.50,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por 2L",
+      "rating": 4.1,
+      "reviews": 156,
+      "imageUrl": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400",
+      "badge": "",
+      "category": {
+        "id": 6,
+        "title": "Bebidas"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Detergente Ariel",
+      "description": "Detergente en polvo Ariel, elimina las manchas más difíciles.",
+      "price": 35.00,
+      "oldPrice": 42.00,
+      "currency": "Bs",
+      "unit": "por 1Kg",
+      "rating": 4.6,
+      "reviews": 278,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU-Wl590-vzoO3wiZ_DfRQAkmg2NaElNB2KQ&s",
+      "badge": "Oferta",
+      "category": {
+        "id": 7,
+        "title": "Limpieza"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Papel Higiénico Elite",
+      "description": "Papel higiénico Elite suave y resistente, pack familiar.",
+      "price": 28.00,
+      "oldPrice": 0,
+      "currency": "Bs",
+      "unit": "por 12 rollos",
+      "rating": 4.4,
+      "reviews": 198,
+      "imageUrl": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=400",
+      "badge": "Pack Familiar",
+      "category": {
+        "id": 7,
+        "title": "Limpieza"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Champú Pantene",
+      "description": "Champú Pantene Pro-V, fortalece y nutre el cabello.",
+      "price": 18.50,
+      "oldPrice": 23.00,
+      "currency": "Bs",
+      "unit": "por 400ml",
+      "rating": 4.5,
+      "reviews": 167,
+      "imageUrl": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400",
+      "badge": "Pro-V",
+      "category": {
+        "id": 8,
+        "title": "Cuidado Personal"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Crema Dental Colgate",
+      "description": "Crema dental Colgate Total 12, protección completa 24 horas.",
+      "price": 12.00,
+      "oldPrice": 15.00,
+      "currency": "Bs",
+      "unit": "por 150ml",
+      "rating": 4.7,
+      "reviews": 234,
+      "imageUrl": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+      "badge": "Total 12",
+      "category": {
+        "id": 8,
+        "title": "Cuidado Personal"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Manzanas Rojas",
+      "description": "Manzanas rojas frescas y crujientes, perfectas para snacks saludables.",
+      "price": 15.50,
+      "oldPrice": 18.00,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.3,
+      "reviews": 128,
+      "imageUrl": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+      "badge": "Fresco",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      }
+    }
+  ],
+  "promociones": [
+    {
+      "id": 101,
+      "name": "Combo Desayuno Completo",
+      "description": "Pan francés + leche + mermelada. Todo lo que necesitas para empezar el día.",
+      "price": 15.90,
+      "oldPrice": 22.00,
+      "currency": "Bs",
+      "unit": "por combo",
+      "rating": 4.8,
+      "reviews": 145,
+      "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400",
+      "badge": "Súper Oferta 28%",
+      "category": {
+        "id": 4,
+        "title": "Panadería"
+      }
+    },
+    {
+      "id": 102,
+      "name": "Pack Limpieza Hogar",
+      "description": "Detergente + papel higiénico + jabón líquido. Kit completo para el hogar.",
+      "price": 65.00,
+      "oldPrice": 85.00,
+      "currency": "Bs",
+      "unit": "por pack",
+      "rating": 4.7,
+      "reviews": 89,
+      "imageUrl": "https://i5.walmartimages.com/asr/b31a72a0-a93b-4201-ad75-5bb02832dc35_1.fa18802e2f4f3d94352e7c093d96908a.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+      "badge": "Ahorro 24%",
+      "category": {
+        "id": 7,
+        "title": "Limpieza"
+      }
+    },
+    {
+      "id": 103,
+      "name": "Canasta Frutas Tropicales",
+      "description": "Manzanas + bananas + naranjas. Frutas frescas seleccionadas.",
+      "price": 35.00,
+      "oldPrice": 45.00,
+      "currency": "Bs",
+      "unit": "por canasta 3Kg",
+      "rating": 4.6,
+      "reviews": 123,
+      "imageUrl": "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400",
+      "badge": "Fresco 22%",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      }
+    },
+    {
+      "id": 104,
+      "name": "Combo Parrillero",
+      "description": "Carne de res + salmón + condimentos. Perfecto para asados familiares.",
+      "price": 180.00,
+      "oldPrice": 230.00,
+      "currency": "Bs",
+      "unit": "por combo 2Kg",
+      "rating": 4.9,
+      "reviews": 67,
+      "imageUrl": "https://carnesmetropolitan.cl/wp-content/uploads/2023/09/ComboParrillero.png",
+      "badge": "Premium 22%",
+      "category": {
+        "id": 2,
+        "title": "Carnes y Pescados"
+      }
+    },
+    {
+      "id": 105,
+      "name": "Pack Cuidado Personal",
+      "description": "Champú + crema dental + jabón. Cuidado completo para toda la familia.",
+      "price": 42.00,
+      "oldPrice": 55.00,
+      "currency": "Bs",
+      "unit": "por pack",
+      "rating": 4.5,
+      "reviews": 201,
+      "imageUrl": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400",
+      "badge": "Familia 24%",
+      "category": {
+        "id": 8,
+        "title": "Cuidado Personal"
+      }
+    },
+    {
+      "id": 106,
+      "name": "Combo Lácteos Premium",
+      "description": "Leche + queso mozzarella + yogurt griego. Productos lácteos de calidad.",
+      "price": 48.00,
+      "oldPrice": 60.00,
+      "currency": "Bs",
+      "unit": "por combo",
+      "rating": 4.7,
+      "reviews": 156,
+      "imageUrl": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+      "badge": "Premium 20%",
+      "category": {
+        "id": 3,
+        "title": "Lácteos y Huevos"
+      }
+    }
+  ]
+}

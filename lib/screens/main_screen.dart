@@ -37,13 +37,25 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Usamos AnnotatedRegion para controlar el estilo de la barra de estado
+    // Configurar diferentes estilos de barra de estado según la pantalla
+    SystemUiOverlayStyle statusBarStyle;
+    
+    if (_selectedIndex == 2) { // HomeScreen con header colorido
+      statusBarStyle = SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light, // Íconos blancos para header naranja
+        statusBarBrightness: Brightness.dark,
+      );
+    } else {
+      statusBarStyle = SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark, // Íconos oscuros para otras pantallas
+        statusBarBrightness: Brightness.light,
+      );
+    }
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.transparent, // Fondo transparente
-        statusBarIconBrightness: Brightness.dark, // Íconos (hora, batería) en negro
-        statusBarBrightness: Brightness.light, // Controla iOS (el contenido es claro, por eso íconos oscuros)
-      ),
+      value: statusBarStyle,
       child: Scaffold(
         // Muestra la pantalla seleccionada actualmente
         body: _screenOptions.elementAt(_selectedIndex),
