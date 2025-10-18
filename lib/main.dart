@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ihc_app/screens/main_screen.dart'; 
+import 'package:ihc_app/screens/animation/splashScreen.dart';
 
 void main() {
   runApp(const GroceryApp());
@@ -19,7 +20,7 @@ class GroceryApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green.shade700),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      home: const SplashScreen(),
     );
   }
 }
