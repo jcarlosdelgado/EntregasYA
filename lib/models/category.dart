@@ -2,13 +2,26 @@ class Category {
   final int id;
   final String title;
   final String imageUrl;
-  const Category({required this.id, required this.title, required this.imageUrl});
+  
+  const Category({
+    required this.id, 
+    required this.title, 
+    required this.imageUrl
+  });
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
       id: json['id'],
       title: json['title'],
-      imageUrl: json['imageUrl'],
+      imageUrl: json['imageUrl'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'imageUrl': imageUrl,
+    };
   }
 }

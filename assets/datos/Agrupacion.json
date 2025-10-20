@@ -1,0 +1,64 @@
+{
+  "agrupaciones": [
+    {
+      "id": 1,
+      "title": "SinGrupo"
+    },
+    {
+      "id": 2,
+      "title": "manzana"
+    },
+    {
+      "id": 3,
+      "title": "banana"
+    },
+    {
+      "id": 4,
+      "title": "lacteos"
+    },
+    {
+      "id": 5,
+      "title": "papa"
+    },
+    {
+      "id": 6,
+      "title": "leche"
+    },
+    {
+      "id": 7,
+      "title": "carne"
+    },
+    {
+      "id": 8,
+      "title": "pan"
+    },
+    {
+      "id": 9,
+      "title": "arroz"
+    },
+    {
+      "id": 10,
+      "title": "queso"
+    },
+    {
+      "id": 11,
+      "title": "pollo"
+    },
+    {
+      "id": 12,
+      "title": "tomate"
+    },
+    {
+      "id": 13,
+      "title": "yogur"
+    },
+    {
+      "id": 14,
+      "title": "harina"
+    },
+    {
+      "id": 15,
+      "title": "cerveza"
+    }
+  ]
+}

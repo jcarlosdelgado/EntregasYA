@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
 import '../models/category.dart';
 import '../models/product.dart';
 import '../widgets/category_square_card.dart';
 import '../widgets/product_card.dart';
 import '../widgets/custom_header.dart';
 import 'category_products_screen.dart';
+import 'product_detail_screen.dart';
+import '../services/product_service.dart';
 
 // --- DATOS DE EJEMPLO ---
 
@@ -32,22 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadData() async {
     try {
-      // Cargar categorías
-      final String catResponse = await rootBundle.loadString('assets/datos/Categorias.json');
-      final catData = json.decode(catResponse);
-    final categories = (catData['categorias'] as List)
-      .map((item) => Category.fromJson(item))
-      .toList();
-
-      // Cargar productos
-      final String prodResponse = await rootBundle.loadString('assets/datos/Productos.json');
-      final prodData = json.decode(prodResponse);
-      final products = (prodData['productos'] as List)
-          .map((item) => Product.fromJson(item))
-          .toList();
-      final promociones = (prodData['promociones'] as List)
-          .map((item) => Product.fromJson(item))
-          .toList();
+      // Cargar datos usando ProductService
+      final categories = await ProductService.loadCategories();
+      final products = await ProductService.loadProducts();
+      final promociones = await ProductService.loadPromociones();
 
       setState(() {
         _categories = categories;
@@ -142,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         categoryId: category.id,
                                         categoryTitle: category.title,
                                         categoryImageUrl: category.imageUrl,
-                                        products: _products,
                                       ),
                                     ),
                                   );
@@ -172,7 +159,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ProductCard(
                               product: product,
                               primaryColor: primaryColor,
-                              width: 200, // ancho fijo para scroll horizontal
+                              width: 200,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailScreen(
+                                      initialProduct: product,
+                                      categoryId: product.category.id,
+                                    ),
+                                  ),
+                                );
+                              },
+                              onAddToCart: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${product.name} agregado al carrito'),
+                                    duration: const Duration(seconds: 2),
+                                    backgroundColor: primaryColor,
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),
@@ -195,7 +202,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ProductCard(
                               product: product,
                               primaryColor: primaryColor,
-                              width: 200, // ancho fijo para scroll horizontal
+                              width: 200,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailScreen(
+                                      initialProduct: product,
+                                      categoryId: product.category.id,
+                                    ),
+                                  ),
+                                );
+                              },
+                              onAddToCart: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${product.name} agregado al carrito'),
+                                    duration: const Duration(seconds: 2),
+                                    backgroundColor: primaryColor,
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),
