@@ -17,7 +17,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  final Color primaryColor = Colors.red.shade700;
+  final Color primaryColor = const Color(0xFFFF6B35); // Naranja principal
   int selectedPaymentMethod = 0; // 0: Tarjeta, 1: QR
   bool isProcessing = false;
 
@@ -48,10 +48,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         title: const Text(
           'Método de Pago',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
+        backgroundColor: Color(0xFFFF6B35), // Fondo naranja
+        iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -61,9 +61,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
           children: [
             _buildOrderSummary(),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'Selecciona tu método de pago',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: primaryColor, // Color naranja para títulos
+              ),
             ),
             const SizedBox(height: 16),
             _buildPaymentMethods(),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../models/category.dart';
 import '../widgets/custom_header.dart';
 import '../widgets/product_card.dart';
+import '../services/cart_manager.dart';
 
-
-class CategoryProductsScreen extends StatelessWidget {
+class CategoryProductsScreen extends StatefulWidget {
   final int categoryId;
   final String categoryTitle;
   final String? categoryImageUrl;
@@ -20,8 +19,57 @@ class CategoryProductsScreen extends StatelessWidget {
   });
 
   @override
+  State<CategoryProductsScreen> createState() => _CategoryProductsScreenState();
+}
+
+class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
+  final CartManager _cartManager = CartManager();
+
+  @override
+  void initState() {
+    super.initState();
+    _cartManager.addListener(_onCartChanged);
+  }
+
+  @override
+  void dispose() {
+    _cartManager.removeListener(_onCartChanged);
+    super.dispose();
+  }
+
+  void _onCartChanged() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _addToCart(Product product) {
+    _cartManager.addItem(
+      CartItem(
+        id: product.id.toString(),
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        unit: 'unidad',
+        quantity: 1,
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${product.name} agregado al carrito'),
+        duration: const Duration(seconds: 1),
+        backgroundColor: const Color(0xFFFF6B35), // Naranja principal
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final filteredProducts = products.where((p) => p.category.id == categoryId).toList();
+    final filteredProducts =
+        widget.products
+            .where((p) => p.category.id == widget.categoryId)
+            .toList();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -30,12 +78,12 @@ class CategoryProductsScreen extends StatelessWidget {
           // Header principal
           CustomHeader(
             title: 'Te lo llevo',
-            cartItemCount: 2,
+            cartItemCount: _cartManager.itemCount,
             showSearchBar: true,
             searchHint: 'Buscar productos...',
             onCartTapped: () {
               // Navegar al carrito
-              debugPrint('Ir al carrito desde categoría');
+              Navigator.pushNamed(context, '/cart');
             },
             onSearchChanged: () {
               // Manejar búsqueda
@@ -43,8 +91,9 @@ class CategoryProductsScreen extends StatelessWidget {
             },
           ),
 
-          const SizedBox(height: 8), // Separación entre header y la imagen de abajo
-
+          const SizedBox(
+            height: 8,
+          ), // Separación entre header y la imagen de abajo
           // Header con imagen noise y sección de categoría sobrepuesta
           Stack(
             children: [
@@ -78,7 +127,11 @@ class CategoryProductsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: Colors.black87),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: 20,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),
@@ -90,19 +143,20 @@ class CategoryProductsScreen extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    if (categoryImageUrl != null)
+                    if (widget.categoryImageUrl != null)
                       CircleAvatar(
-                        backgroundImage: AssetImage(categoryImageUrl!),
+                        backgroundImage: AssetImage(widget.categoryImageUrl!),
                         radius: 32,
                       ),
-                    if (categoryImageUrl != null) const SizedBox(width: 16),
+                    if (widget.categoryImageUrl != null)
+                      const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            categoryTitle,
+                            widget.categoryTitle,
                             style: const TextStyle(
                               fontSize: 27,
                               fontWeight: FontWeight.bold,
@@ -130,7 +184,10 @@ class CategoryProductsScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
@@ -138,9 +195,16 @@ class CategoryProductsScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: const [
-                        Icon(Icons.filter_list_rounded, size: 20, color: Colors.black54),
+                        Icon(
+                          Icons.filter_list_rounded,
+                          size: 20,
+                          color: Colors.black54,
+                        ),
                         SizedBox(width: 8),
-                        Text('Todas las subcategorías', style: TextStyle(fontSize: 15)),
+                        Text(
+                          'Todas las subcategorías',
+                          style: TextStyle(fontSize: 15),
+                        ),
                       ],
                     ),
                   ),
@@ -153,49 +217,46 @@ class CategoryProductsScreen extends StatelessWidget {
 
           // Lista de productos en grilla
           Expanded(
-            child: filteredProducts.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No hay productos en esta categoría',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
+            child:
+                filteredProducts.isEmpty
+                    ? const Center(
+                      child: Text(
+                        'No hay productos en esta categoría',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
+                    )
+                    : GridView.builder(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 16,
+                      ), // padding simétrico
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 240,
+                            childAspectRatio: 0.45,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
+                      itemCount: filteredProducts.length,
+                      itemBuilder: (context, index) {
+                        final product = filteredProducts[index];
+                        return ProductCard(
+                          product: product,
+                          primaryColor: Colors.deepOrange,
+                          // Nuevo: sin margen lateral derecho en grilla
+                          margin: const EdgeInsets.only(
+                            bottom: 8,
+                          ), // solo margen inferior
+                          onTap: () {
+                            // Aquí puedes navegar a la pantalla de detalle del producto
+                            debugPrint(
+                              'Producto seleccionado: ${product.name}',
+                            );
+                          },
+                          onAddToCart: () => _addToCart(product),
+                        );
+                      },
                     ),
-                  )
-                : GridView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), // padding simétrico
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 240,
-                      childAspectRatio: 0.45,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemCount: filteredProducts.length,
-                    itemBuilder: (context, index) {
-                      final product = filteredProducts[index];
-                      return ProductCard(
-                        product: product,
-                        primaryColor: Colors.deepOrange,
-                        // Nuevo: sin margen lateral derecho en grilla
-                        margin: const EdgeInsets.only(bottom: 8), // solo margen inferior
-                        onTap: () {
-                          // Aquí puedes navegar a la pantalla de detalle del producto
-                          debugPrint('Producto seleccionado: ${product.name}');
-                        },
-                        onAddToCart: () {
-                          // Lógica para agregar al carrito
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('${product.name} agregado al carrito'),
-                              duration: const Duration(seconds: 2),
-                              backgroundColor: Colors.deepOrange,
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
           ),
         ],
       ),

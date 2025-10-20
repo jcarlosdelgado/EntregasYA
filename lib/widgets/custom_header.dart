@@ -23,22 +23,22 @@ class CustomHeader extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment(0, -1), 
+          begin: Alignment(0, -1),
           end: Alignment(0, 1),
-          colors: [
-            Color(0xFFFF825A), 
-            Color.fromARGB(255, 250, 108, 56), 
-          ],
+          colors: [Color(0xFFFF825A), Color.fromARGB(255, 250, 108, 56)],
           stops: [0.0, 1.0],
         ),
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(25),
-        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
       ),
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 10.0, top: 8.0),
+          padding: const EdgeInsets.only(
+            left: 15.0,
+            right: 15.0,
+            bottom: 10.0,
+            top: 8.0,
+          ),
           child: Column(
             children: [
               // Header superior con título y carrito
@@ -89,7 +89,10 @@ class CustomHeader extends StatelessWidget {
                             right: -2,
                             top: -2,
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
                               decoration: const BoxDecoration(
                                 color: Color(0xFFFFB300), // Naranja
                                 shape: BoxShape.circle,
@@ -114,7 +117,7 @@ class CustomHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              
+
               if (showSearchBar) ...[
                 const SizedBox(height: 5),
                 // Barra de búsqueda

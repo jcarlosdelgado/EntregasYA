@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ihc_app/screens/order_history_screen.dart';
 
 // Definición de un elemento de menú
 class ProfileMenuItem {
@@ -18,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Colors.red.shade700;
+    final Color primaryColor = const Color(0xFFFA6C38); // orange accent
     final Color accentColor = Colors.grey.shade300;
 
     // Menú de opciones de perfil (simulamos las acciones con SnackBar)
@@ -26,7 +27,13 @@ class ProfileScreen extends StatelessWidget {
       ProfileMenuItem(
         title: 'Mis Órdenes',
         icon: Icons.receipt_long_rounded,
-        onTap: () => _showSnackBar(context, 'Navegando a Historial de Órdenes'),
+        onTap:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OrderHistoryScreen(),
+              ),
+            ),
       ),
       ProfileMenuItem(
         title: 'Direcciones',
@@ -55,17 +62,22 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Mi Perfil',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            color: Colors.white,
+          ),
         ),
         centerTitle: false,
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
+        backgroundColor: const Color(0xFFFF6B35), // Fondo naranja
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
             onPressed: () => _showSnackBar(context, 'Editando Perfil'),
-            icon: Icon(Icons.settings_rounded, color: primaryColor),
+            icon: const Icon(Icons.settings_rounded, color: Colors.white),
           ),
         ],
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 90), // Espacio para el NavBar
@@ -78,8 +90,10 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // 2. Opciones de Menú (tarjetas elegantes)
-            ...menuItems.map((item) => _buildMenuItem(context, item, primaryColor)),
-            
+            ...menuItems.map(
+              (item) => _buildMenuItem(context, item, primaryColor),
+            ),
+
             const SizedBox(height: 30),
 
             // 3. Botón de Cerrar Sesión (Destacado)
@@ -98,7 +112,10 @@ class ProfileScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
@@ -124,11 +141,7 @@ class ProfileScreen extends StatelessWidget {
               color: accentColor,
               border: Border.all(color: primaryColor, width: 3),
             ),
-            child: Icon(
-              Icons.person,
-              size: 40,
-              color: primaryColor,
-            ),
+            child: Icon(Icons.person, size: 40, color: primaryColor),
           ),
           const SizedBox(width: 15),
           // Información del Usuario
@@ -146,10 +159,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 'carlos@ejemplo.com',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
               ),
             ],
           ),
@@ -159,7 +169,11 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // Widget para cada ítem de menú (Tile)
-  Widget _buildMenuItem(BuildContext context, ProfileMenuItem item, Color primaryColor) {
+  Widget _buildMenuItem(
+    BuildContext context,
+    ProfileMenuItem item,
+    Color primaryColor,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       child: ListTile(
@@ -174,10 +188,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         title: Text(
           item.title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         trailing: Icon(
           Icons.arrow_forward_ios_rounded,

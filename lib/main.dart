@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:ihc_app/screens/main_screen.dart'; 
+import 'package:ihc_app/screens/main_screen.dart';
+import 'package:ihc_app/screens/cart_screen.dart';
+import 'package:ihc_app/screens/payment_screen.dart';
+import 'package:ihc_app/screens/delivery_tracking_screen.dart';
+import 'package:ihc_app/screens/order_completed_screen.dart';
+import 'package:ihc_app/screens/order_history_screen.dart';
+import 'package:ihc_app/screens/rating_screen.dart';
+import 'package:ihc_app/screens/test_flow_screen.dart';
+import 'package:ihc_app/services/notification_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicializar el servicio de notificaciones
+  await NotificationService().initialize();
+
   runApp(const GroceryApp());
 }
 
@@ -15,11 +28,53 @@ class GroceryApp extends StatelessWidget {
       title: 'Supermercado Delivery',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // Color base verde
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green.shade700),
+        // Esquema de colores naranja y blanco
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFFF6B35), // Naranja principal
+          brightness: Brightness.light,
+        ),
+        primaryColor: const Color(0xFFFF6B35),
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFFF6B35),
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFFF6B35),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
         useMaterial3: true,
       ),
       home: const MainScreen(),
+      routes: {
+        '/cart': (context) => const CartScreen(),
+        '/payment':
+            (context) => const PaymentScreen(totalAmount: 0, cartItems: []),
+        '/tracking':
+            (context) => const DeliveryTrackingScreen(
+              totalAmount: 0,
+              orderNumber: '',
+              cartItems: [],
+              paymentMethod: 'Tarjeta de Crédito',
+            ),
+        '/completed':
+            (context) => const OrderCompletedScreen(
+              orderNumber: '',
+              totalAmount: 0,
+              cartItems: [],
+              paymentMethod: 'Tarjeta de Crédito',
+            ),
+        '/history': (context) => const OrderHistoryScreen(),
+        '/rating':
+            (context) => const RatingScreen(orderNumber: '', totalAmount: 0),
+        '/test': (context) => const TestFlowScreen(),
+      },
     );
   }
 }
