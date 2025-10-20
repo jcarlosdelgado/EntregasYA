@@ -71,7 +71,7 @@ flutter:
     - assets/images/categorias/panaderia.png
     - assets/datos/Productos.json
     - assets/datos/Categorias.json
-    - assets/carrito-de-compras.png
+    - assets/datos/Subcategorias.json
     - assets/noisePainter.png
     - assets/Lottie/Te_lo_llevo.json
 

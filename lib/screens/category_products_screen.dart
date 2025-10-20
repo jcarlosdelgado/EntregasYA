@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ihc_app/models/sub_categoria.dart';
 import '../models/product.dart';
 import '../widgets/custom_header.dart';
 import '../widgets/product_card.dart';
 import '../services/product_service.dart';
 import 'product_detail_screen.dart';
+import '../widgets/select.dart';
 
 class CategoryProductsScreen extends StatefulWidget {
   final int categoryId;
@@ -29,10 +31,14 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   Map<int, List<Product>> _agrupaciones = {};
   Map<int, int> _agrupacionIndices = {};
 
+  List<SubCategoria> _subcategorias = [];
+  SubCategoria? _selectedSubcategoria;
+
   @override
   void initState() {
     super.initState();
     _loadProducts();
+    _loadSubcategorias();
   }
 
   Future<void> _loadProducts() async {
@@ -63,6 +69,17 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     }
   }
 
+  Future<void> _loadSubcategorias() async {
+    try {
+      final subcats = await ProductService.getSubcategoriasByCategoria(widget.categoryId);
+      setState(() {
+        _subcategorias = subcats;
+      });
+    } catch (e) {
+      debugPrint('Error loading subcategorias: $e');
+    }
+  }
+
   // Cambia el producto mostrado en la agrupación (siguiente)
   void _nextProduct(int agrupacionId) {
     setState(() {
@@ -71,6 +88,154 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           (_agrupacionIndices[agrupacionId]! + 1) % count;
     });
   }
+
+  // Nuevo método para mostrar el selector de subcategorías
+  void _showSubcategorySelector() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.6,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+          ),
+          child: Column(
+            children: [
+              // Handle bar
+              Container(
+                margin: const EdgeInsets.only(top: 12),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              // Header
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.category_outlined,
+                      color: Colors.deepOrange,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Seleccionar subcategoría',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(Icons.close, color: Colors.grey.shade600),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1),
+              // Lista de opciones
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  children: [
+                    // Opción "Todas las subcategorías"
+                    Select(
+                      title: 'Todas las subcategorías',
+                      icon: Icons.grid_view_rounded,
+                      isSelected: _selectedSubcategoria == null,
+                      onTap: () {
+                        setState(() {
+                          _selectedSubcategoria = null;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                    // Opciones de subcategorías
+                    ..._subcategorias.map((subcat) => Select(
+                      title: subcat.title,
+                      icon: Icons.label_outline, 
+                      isSelected: _selectedSubcategoria?.id == subcat.id,
+                      onTap: () {
+                        setState(() {
+                          _selectedSubcategoria = subcat;
+                        });
+                        Navigator.pop(context);
+                      },
+                    )),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Widget _buildSubcategoryOption({
+  //   required String title,
+  //   required IconData icon,
+  //   required bool isSelected,
+  //   required VoidCallback onTap,
+  // }) {
+  //   return Container(
+  //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+  //     decoration: BoxDecoration(
+  //       color: isSelected ? Colors.deepOrange.withOpacity(0.08) : Colors.transparent,
+  //       borderRadius: BorderRadius.circular(12),
+  //       border: isSelected 
+  //         ? Border.all(color: Colors.deepOrange.withOpacity(0.3), width: 1.5)
+  //         : null,
+  //     ),
+  //     child: ListTile(
+  //       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+  //       leading: Container(
+  //         padding: const EdgeInsets.all(8),
+  //         decoration: BoxDecoration(
+  //           color: isSelected ? Colors.deepOrange : Colors.grey.shade100,
+  //           borderRadius: BorderRadius.circular(8),
+  //         ),
+  //         child: Icon(
+  //           icon,
+  //           color: isSelected ? Colors.white : Colors.grey.shade600,
+  //           size: 20,
+  //         ),
+  //       ),
+  //       title: Text(
+  //         title,
+  //         style: TextStyle(
+  //           fontSize: 16,
+  //           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+  //           color: isSelected ? Colors.deepOrange.shade700 : Colors.black87,
+  //         ),
+  //       ),
+  //       trailing: isSelected
+  //         ? Icon(
+  //             Icons.check_circle,
+  //             color: Colors.deepOrange,
+  //             size: 22,
+  //           )
+  //         : Icon(
+  //             Icons.arrow_forward_ios,
+  //             color: Colors.grey.shade400,
+  //             size: 16,
+  //           ),
+  //       onTap: onTap,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -174,19 +339,49 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey.shade200),
-                    ),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.filter_list_rounded, size: 20, color: Colors.black54),
-                        SizedBox(width: 8),
-                        Text('Todas las subcategorías', style: TextStyle(fontSize: 15)),
-                      ],
+                  child: GestureDetector(
+                    onTap: _showSubcategorySelector,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey.shade200, width: 1),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: Colors.deepOrange.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Icon(
+                              Icons.tune_rounded,
+                              size: 18,
+                              color: Colors.deepOrange,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              _selectedSubcategoria?.title ?? 'Todas las subcategorías',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: _selectedSubcategoria != null 
+                                  ? Colors.deepOrange.shade700 
+                                  : Colors.grey.shade700,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.expand_more_rounded,
+                            color: Colors.grey.shade500,
+                            size: 20,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

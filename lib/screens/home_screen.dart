@@ -7,6 +7,7 @@ import '../widgets/custom_header.dart';
 import 'category_products_screen.dart';
 import 'product_detail_screen.dart';
 import '../services/product_service.dart';
+import '../widgets/see_more_card.dart'; // <-- Importa el nuevo widget
 
 // --- DATOS DE EJEMPLO ---
 
@@ -153,34 +154,45 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          itemCount: _promociones.length,
+                          itemCount: _promociones.length + 1, // +1 para SeeMoreCard
                           itemBuilder: (context, index) {
-                            final product = _promociones[index];
-                            return ProductCard(
-                              product: product,
-                              primaryColor: primaryColor,
-                              width: 200,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailScreen(
-                                      initialProduct: product,
-                                      categoryId: product.category.id,
+                            if (index < _promociones.length) {
+                              final product = _promociones[index];
+                              return ProductCard(
+                                product: product,
+                                primaryColor: primaryColor,
+                                width: 200,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDetailScreen(
+                                        initialProduct: product,
+                                        categoryId: product.category.id,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              onAddToCart: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('${product.name} agregado al carrito'),
-                                    duration: const Duration(seconds: 2),
-                                    backgroundColor: primaryColor,
-                                  ),
-                                );
-                              },
-                            );
+                                  );
+                                },
+                                onAddToCart: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('${product.name} agregado al carrito'),
+                                      duration: const Duration(seconds: 2),
+                                      backgroundColor: primaryColor,
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              // SeeMoreCard al final
+                              return SeeMoreCard(
+                                width: 200,
+                                onTap: () {
+                                  // Acción al tocar "Ver más productos"
+                                  debugPrint('Ver más promociones');
+                                },
+                              );
+                            }
                           },
                         ),
                       ),
@@ -196,34 +208,45 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          itemCount: _products.length,
+                          itemCount: _products.length + 1, // +1 para SeeMoreCard
                           itemBuilder: (context, index) {
-                            final product = _products[index];
-                            return ProductCard(
-                              product: product,
-                              primaryColor: primaryColor,
-                              width: 200,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailScreen(
-                                      initialProduct: product,
-                                      categoryId: product.category.id,
+                            if (index < _products.length) {
+                              final product = _products[index];
+                              return ProductCard(
+                                product: product,
+                                primaryColor: primaryColor,
+                                width: 200,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDetailScreen(
+                                        initialProduct: product,
+                                        categoryId: product.category.id,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              onAddToCart: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('${product.name} agregado al carrito'),
-                                    duration: const Duration(seconds: 2),
-                                    backgroundColor: primaryColor,
-                                  ),
-                                );
-                              },
-                            );
+                                  );
+                                },
+                                onAddToCart: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('${product.name} agregado al carrito'),
+                                      duration: const Duration(seconds: 2),
+                                      backgroundColor: primaryColor,
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              // SeeMoreCard al final
+                              return SeeMoreCard(
+                                width: 200,
+                                onTap: () {
+                                  // Acción al tocar "Ver más productos"
+                                  debugPrint('Ver más destacados');
+                                },
+                              );
+                            }
                           },
                         ),
                       ),

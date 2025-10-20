@@ -2,10 +2,12 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import '../models/category.dart';
 import '../models/product.dart';
+import '../models/sub_categoria.dart';
 
 class ProductService {
   static const String categoriasPath = 'assets/datos/Categorias.json';
   static const String productosPath = 'assets/datos/Productos.json';
+  static const String subcategoriasPath = 'assets/datos/Subcategorias.json';
 
   static Future<List<Category>> loadCategories() async {
     try {
@@ -70,5 +72,19 @@ class ProductService {
       products = await getProductsByCategory(categoryId);
     // Filtrar por agrupación
     return products.where((p) => (p.agrupacion?.id ?? p.id) == agrupacionId).toList();
+  }
+
+  /// Obtiene las subcategorías de una categoría dada
+  static Future<List<SubCategoria>> getSubcategoriasByCategoria(int categoryId) async {
+    try {
+      final String response = await rootBundle.loadString(subcategoriasPath);
+      final data = json.decode(response);
+      return (data['subcategorias'] as List)
+          .where((item) => item['categoryId'] == categoryId)
+          .map((item) => SubCategoria.fromJson(item))
+          .toList();
+    } catch (e) {
+      throw Exception('Error loading subcategorias: $e');
+    }
   }
 }

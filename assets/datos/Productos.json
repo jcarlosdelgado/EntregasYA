@@ -16,6 +16,10 @@
         "id": 1,
         "title": "Frutas y Verduras"
       },
+      "subcategoria": {
+        "id": 1,
+        "title": "Frutas"
+      },
       "agrupacion": {
         "id": 2,
         "title": "manzana"
@@ -36,6 +40,10 @@
       "category": {
         "id": 1,
         "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 1,
+        "title": "Frutas"
       },
       "agrupacion": {
         "id": 3,
@@ -58,6 +66,10 @@
         "id": 2,
         "title": "Carnes y Pescados"
       },
+      "subcategoria": {
+        "id": 3,
+        "title": "Carnes Rojas"
+      },
       "agrupacion": {
         "id": 7,
         "title": "carne"
@@ -78,6 +90,10 @@
       "category": {
         "id": 2,
         "title": "Carnes y Pescados"
+      },
+      "subcategoria": {
+        "id": 4,
+        "title": "Pescados"
       },
       "agrupacion": {
         "id": 1,
@@ -100,6 +116,10 @@
         "id": 3,
         "title": "Lácteos y Huevos"
       },
+      "subcategoria": {
+        "id": 5,
+        "title": "Leches"
+      },
       "agrupacion": {
         "id": 6,
         "title": "leche"
@@ -120,6 +140,10 @@
       "category": {
         "id": 3,
         "title": "Lácteos y Huevos"
+      },
+      "subcategoria": {
+        "id": 6,
+        "title": "Quesos"
       },
       "agrupacion": {
         "id": 10,
@@ -142,6 +166,10 @@
         "id": 4,
         "title": "Panadería"
       },
+      "subcategoria": {
+        "id": 7,
+        "title": "Panes"
+      },
       "agrupacion": {
         "id": 8,
         "title": "pan"
@@ -162,6 +190,10 @@
       "category": {
         "id": 4,
         "title": "Panadería"
+      },
+      "subcategoria": {
+        "id": 8,
+        "title": "Bollería"
       },
       "agrupacion": {
         "id": 8,
@@ -184,6 +216,10 @@
         "id": 5,
         "title": "Despensa"
       },
+      "subcategoria": {
+        "id": 9,
+        "title": "Granos y Cereales"
+      },
       "agrupacion": {
         "id": 9,
         "title": "arroz"
@@ -204,6 +240,10 @@
       "category": {
         "id": 5,
         "title": "Despensa"
+      },
+      "subcategoria": {
+        "id": 10,
+        "title": "Aceites y Vinagres"
       },
       "agrupacion": {
         "id": 1,
@@ -226,6 +266,10 @@
         "id": 6,
         "title": "Bebidas"
       },
+      "subcategoria": {
+        "id": 11,
+        "title": "Refrescos"
+      },
       "agrupacion": {
         "id": 1,
         "title": "SinGrupo"
@@ -246,6 +290,10 @@
       "category": {
         "id": 6,
         "title": "Bebidas"
+      },
+      "subcategoria": {
+        "id": 12,
+        "title": "Aguas"
       },
       "agrupacion": {
         "id": 1,
@@ -268,6 +316,10 @@
         "id": 7,
         "title": "Limpieza"
       },
+      "subcategoria": {
+        "id": 13,
+        "title": "Detergentes"
+      },
       "agrupacion": {
         "id": 1,
         "title": "SinGrupo"
@@ -288,6 +340,10 @@
       "category": {
         "id": 7,
         "title": "Limpieza"
+      },
+      "subcategoria": {
+        "id": 14,
+        "title": "Papel y Pañuelos"
       },
       "agrupacion": {
         "id": 1,
@@ -310,6 +366,10 @@
         "id": 8,
         "title": "Cuidado Personal"
       },
+      "subcategoria": {
+        "id": 15,
+        "title": "Cuidado Cabello"
+      },
       "agrupacion": {
         "id": 1,
         "title": "SinGrupo"
@@ -331,30 +391,13 @@
         "id": 8,
         "title": "Cuidado Personal"
       },
+      "subcategoria": {
+        "id": 16,
+        "title": "Cuidado Dental"
+      },
       "agrupacion": {
         "id": 1,
         "title": "SinGrupo"
-      }
-    },
-    {
-      "id": 17,
-      "name": "Manzanas Rojas",
-      "description": "Manzanas rojas frescas y crujientes, perfectas para snacks saludables.",
-      "price": 15.50,
-      "oldPrice": 18.00,
-      "currency": "Bs",
-      "unit": "por Kg",
-      "rating": 4.3,
-      "reviews": 128,
-      "imageUrl": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
-      "badge": "Fresco",
-      "category": {
-        "id": 1,
-        "title": "Frutas y Verduras"
-      },
-      "agrupacion": {
-        "id": 2,
-        "title": "manzana"
       }
     }
   ],
@@ -374,6 +417,10 @@
       "category": {
         "id": 4,
         "title": "Panadería"
+      },
+      "subcategoria": {
+        "id": 7,
+        "title": "Panes"
       },
       "agrupacion": {
         "id": 8,
@@ -396,6 +443,10 @@
         "id": 7,
         "title": "Limpieza"
       },
+      "subcategoria": {
+        "id": 17,
+        "title": "Combos Limpieza"
+      },
       "agrupacion": {
         "id": 1,
         "title": "SinGrupo" 
@@ -416,6 +467,10 @@
       "category": {
         "id": 1,
         "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 1,
+        "title": "Frutas"
       },
       "agrupacion": {
         "id": 1,
@@ -438,6 +493,10 @@
         "id": 2,
         "title": "Carnes y Pescados"
       },
+      "subcategoria": {
+        "id": 18,
+        "title": "Combos Carnes"
+      },
       "agrupacion": {
         "id": 7,
         "title": "carne"
@@ -459,6 +518,10 @@
         "id": 8,
         "title": "Cuidado Personal"
       },
+      "subcategoria": {
+        "id": 19,
+        "title": "Combos Cuidado"
+      },
       "agrupacion": {
         "id": 1,
         "title": "SinGrupo"
@@ -479,6 +542,10 @@
       "category": {
         "id": 3,
         "title": "Lácteos y Huevos"
+      },
+      "subcategoria": {
+        "id": 20,
+        "title": "Combos Lácteos"
       },
       "agrupacion": {
         "id": 4,
