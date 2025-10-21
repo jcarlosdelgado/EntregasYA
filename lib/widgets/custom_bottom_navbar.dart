@@ -11,24 +11,32 @@ class CustomBottomNavBar extends StatelessWidget {
     required this.onItemTapped,
   });
 
-  // Lista de íconos para el NavBar (5 elementos)
+  // Lista de íconos para el NavBar (4 elementos)
   final List<IconData> _icons = const [
-    Icons.grid_view_rounded,    // 0. Explorar
-    Icons.local_offer_rounded,  // 1. Ofertas
-    Icons.home_rounded,         // 2. HOME (Central y Destacado)
-    Icons.shopping_cart_sharp,  // 3. Carrito
-    Icons.person_rounded,       // 4. Perfil
+    Icons.home_rounded, // 0. HOME (Principal)
+    Icons.shopping_cart_rounded, // 1. Carrito
+    Icons.history_rounded, // 2. Historial de Pedidos
+    Icons.person_rounded, // 3. Perfil de Usuario
+  ];
+
+  // Lista de etiquetas para cada ícono
+  final List<String> _labels = const [
+    'Inicio', // 0. HOME
+    'Carrito', // 1. Carrito
+    'Historial', // 2. Historial
+    'Perfil', // 3. Perfil
   ];
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Colors.red.shade700;
+    // Use orange color scheme
+    final Color primaryColor = const Color(0xFFFF6B35); // Naranja principal
     final Color unselectedColor = Colors.grey.shade600;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Container(
-        height: 70, 
+        height: 80, // Un poco más alto para acomodar las etiquetas
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30.0),
@@ -41,47 +49,71 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
           ],
         ),
-        
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(_icons.length, (index) {
             final isSelected = index == selectedIndex;
-            final isCenterButton = index == 2; // El Home está en la posición 2
 
             return Expanded(
               child: GestureDetector(
                 onTap: () => onItemTapped(index),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Stack(
-                    alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Indicador Dinámico (Círculo Rojo)
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 350), 
-                        curve: Curves.easeOut, 
-                        width: isSelected ? (isCenterButton ? 60 : 48) : 0, // El centro es más grande
-                        height: isSelected ? (isCenterButton ? 60 : 48) : 0,
-                        decoration: BoxDecoration(
-                          color: primaryColor,
-                          shape: BoxShape.circle,
-                        ),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // Indicador Dinámico (Círculo Rojo)
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeOut,
+                            width:
+                                isSelected
+                                    ? 42
+                                    : 0, // Tamaño uniforme para todos
+                            height: isSelected ? 42 : 0,
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+
+                          // Ícono con Transición de Color y Escala
+                          AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 350),
+                            transitionBuilder: (child, animation) {
+                              return ScaleTransition(
+                                scale: animation,
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              _icons[index],
+                              key: ValueKey<bool>(isSelected),
+                              color:
+                                  isSelected ? Colors.white : unselectedColor,
+                              size: 24, // Tamaño uniforme para todos los iconos
+                            ),
+                          ),
+                        ],
                       ),
-                      
-                      // Ícono con Transición de Color y Escala
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 350),
-                        transitionBuilder: (child, animation) {
-                          return ScaleTransition(
-                            scale: animation, 
-                            child: FadeTransition(opacity: animation, child: child),
-                          );
-                        },
-                        child: Icon(
-                          _icons[index],
-                          key: ValueKey<bool>(isSelected),
-                          color: isSelected ? Colors.white : unselectedColor,
-                          size: isCenterButton ? 32 : 28, // El ícono central es ligeramente más grande siempre
+
+                      const SizedBox(height: 4),
+
+                      // Etiqueta del ícono
+                      Text(
+                        _labels[index],
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.normal,
+                          color: isSelected ? primaryColor : unselectedColor,
                         ),
                       ),
                     ],

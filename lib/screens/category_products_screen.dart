@@ -6,6 +6,7 @@ import '../widgets/product_card.dart';
 import '../services/product_service.dart';
 import 'product_detail_screen.dart';
 import '../widgets/select.dart';
+import '../services/cart_manager.dart';
 
 class CategoryProductsScreen extends StatefulWidget {
   final int categoryId;
@@ -27,18 +28,32 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   List<Product> _products = [];
   bool _isLoading = true;
 
-  // Nuevo: Map para agrupaciones y control de índice actual por agrupación
+  // Map para agrupaciones y control de índice actual por agrupación
   Map<int, List<Product>> _agrupaciones = {};
   Map<int, int> _agrupacionIndices = {};
 
   List<SubCategoria> _subcategorias = [];
   SubCategoria? _selectedSubcategoria;
+  final CartManager _cartManager = CartManager();
 
   @override
   void initState() {
     super.initState();
+    _cartManager.addListener(_onCartChanged);
     _loadProducts();
     _loadSubcategorias();
+  }
+
+  @override
+  void dispose() {
+    _cartManager.removeListener(_onCartChanged);
+    super.dispose();
+  }
+
+  void _onCartChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadProducts() async {
@@ -89,7 +104,28 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     });
   }
 
-  // Nuevo método para mostrar el selector de subcategorías
+  void _addToCart(Product product) {
+    _cartManager.addItem(
+      CartItem(
+        id: product.id.toString(),
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        unit: 'unidad',
+        quantity: 1,
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${product.name} agregado al carrito'),
+        duration: const Duration(seconds: 1),
+        backgroundColor: const Color(0xFFFF6B35), // Naranja principal
+      ),
+    );
+  }
+
+  // Método para mostrar el selector de subcategorías
   void _showSubcategorySelector() {
     showModalBottomSheet(
       context: context,
@@ -184,59 +220,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     );
   }
 
-  // Widget _buildSubcategoryOption({
-  //   required String title,
-  //   required IconData icon,
-  //   required bool isSelected,
-  //   required VoidCallback onTap,
-  // }) {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-  //     decoration: BoxDecoration(
-  //       color: isSelected ? Colors.deepOrange.withOpacity(0.08) : Colors.transparent,
-  //       borderRadius: BorderRadius.circular(12),
-  //       border: isSelected 
-  //         ? Border.all(color: Colors.deepOrange.withOpacity(0.3), width: 1.5)
-  //         : null,
-  //     ),
-  //     child: ListTile(
-  //       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-  //       leading: Container(
-  //         padding: const EdgeInsets.all(8),
-  //         decoration: BoxDecoration(
-  //           color: isSelected ? Colors.deepOrange : Colors.grey.shade100,
-  //           borderRadius: BorderRadius.circular(8),
-  //         ),
-  //         child: Icon(
-  //           icon,
-  //           color: isSelected ? Colors.white : Colors.grey.shade600,
-  //           size: 20,
-  //         ),
-  //       ),
-  //       title: Text(
-  //         title,
-  //         style: TextStyle(
-  //           fontSize: 16,
-  //           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-  //           color: isSelected ? Colors.deepOrange.shade700 : Colors.black87,
-  //         ),
-  //       ),
-  //       trailing: isSelected
-  //         ? Icon(
-  //             Icons.check_circle,
-  //             color: Colors.deepOrange,
-  //             size: 22,
-  //           )
-  //         : Icon(
-  //             Icons.arrow_forward_ios,
-  //             color: Colors.grey.shade400,
-  //             size: 16,
-  //           ),
-  //       onTap: onTap,
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -247,11 +230,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           // Header principal
           CustomHeader(
             title: 'Te lo llevo',
-            cartItemCount: 2,
+            cartItemCount: _cartManager.itemCount,
             showSearchBar: true,
             searchHint: 'Buscar productos...',
             onCartTapped: () {
               debugPrint('Ir al carrito desde categoría');
+              Navigator.pushNamed(context, '/cart');
             },
             onSearchChanged: () {
               debugPrint('Búsqueda cambiada desde categoría');
@@ -290,7 +274,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                         ),
                       ],
                     ),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: Colors.black87),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: 20,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),
@@ -438,15 +426,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                       ),
                                     );
                                   },
-                                  onAddToCart: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('${product.name} agregado al carrito'),
-                                        duration: const Duration(seconds: 2),
-                                        backgroundColor: Colors.deepOrange,
-                                      ),
-                                    );
-                                  },
+                                  onAddToCart: () => _addToCart(product),
                                 ),
                                 // Indicadores visuales para múltiples productos
                                 if (hasMultipleProducts) ...[

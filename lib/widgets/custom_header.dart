@@ -31,9 +31,7 @@ class CustomHeader extends StatelessWidget {
           ],
           stops: [0.0, 1.0],
         ),
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(25),
-        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
       ),
       child: SafeArea(
         bottom: false,

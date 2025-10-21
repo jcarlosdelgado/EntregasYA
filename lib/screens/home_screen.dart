@@ -4,13 +4,11 @@ import '../models/product.dart';
 import '../widgets/category_square_card.dart';
 import '../widgets/product_card.dart';
 import '../widgets/custom_header.dart';
+import '../services/cart_manager.dart';
 import 'category_products_screen.dart';
 import 'product_detail_screen.dart';
 import '../services/product_service.dart';
-import '../widgets/see_more_card.dart'; // <-- Importa el nuevo widget
-
-// --- DATOS DE EJEMPLO ---
-
+import '../widgets/see_more_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,11 +22,46 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Product> _products = [];
   List<Product> _promociones = [];
   bool _isLoading = true;
+  final CartManager _cartManager = CartManager();
 
   @override
   void initState() {
     super.initState();
     _loadData();
+    _cartManager.addListener(_onCartChanged);
+  }
+
+  @override
+  void dispose() {
+    _cartManager.removeListener(_onCartChanged);
+    super.dispose();
+  }
+
+  void _onCartChanged() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _addToCart(Product product) {
+    _cartManager.addItem(
+      CartItem(
+        id: product.id.toString(),
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        unit: 'unidad',
+        quantity: 1,
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${product.name} agregado al carrito'),
+        duration: const Duration(seconds: 1),
+        backgroundColor: const Color(0xFFFF6B35), // Naranja principal
+      ),
+    );
   }
 
   Future<void> _loadData() async {
@@ -74,10 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (subtitle != null)
               Text(
                 subtitle,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade500,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
               ),
           ],
         ),
@@ -92,13 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomHeader(
-                cartItemCount: 2,
+                cartItemCount: _cartManager.itemCount,
                 onCartTapped: () {
-                  // Navegar al carrito
-                  debugPrint('Ir al carrito');
+                  Navigator.pushNamed(context, '/cart');
                 },
                 onSearchChanged: () {
-                  // Manejar búsqueda
                   debugPrint('Búsqueda cambiada');
                 },
               ),
@@ -173,22 +201,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   );
                                 },
-                                onAddToCart: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('${product.name} agregado al carrito'),
-                                      duration: const Duration(seconds: 2),
-                                      backgroundColor: primaryColor,
-                                    ),
-                                  );
-                                },
+                                onAddToCart: () => _addToCart(product),
                               );
                             } else {
                               // SeeMoreCard al final
                               return SeeMoreCard(
                                 width: 200,
                                 onTap: () {
-                                  // Acción al tocar "Ver más productos"
                                   debugPrint('Ver más promociones');
                                 },
                               );
@@ -227,22 +246,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   );
                                 },
-                                onAddToCart: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('${product.name} agregado al carrito'),
-                                      duration: const Duration(seconds: 2),
-                                      backgroundColor: primaryColor,
-                                    ),
-                                  );
-                                },
+                                onAddToCart: () => _addToCart(product),
                               );
                             } else {
                               // SeeMoreCard al final
                               return SeeMoreCard(
                                 width: 200,
                                 onTap: () {
-                                  // Acción al tocar "Ver más productos"
                                   debugPrint('Ver más destacados');
                                 },
                               );
