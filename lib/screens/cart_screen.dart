@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ihc_app/services/cart_manager.dart';
 import 'package:ihc_app/screens/payment_screen.dart';
+import 'package:ihc_app/widgets/custom_header.dart'; // Agrega el import
 
 // Carrito de compras usando CartManager para el estado
 class CartScreen extends StatefulWidget {
@@ -44,99 +45,96 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          'Tu Carrito',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-            color: Colors.white,
+      // Reemplaza AppBar por CustomHeader
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomHeader(
+            title: 'Tu Carrito',
+            showCartButton: false,
+            showSearchBar: false,
           ),
-        ),
-        centerTitle: false,
-        backgroundColor: const Color(0xFFFF6B35), // Fondo naranja
-        iconTheme: const IconThemeData(color: Colors.white),
-        elevation: 0,
+          Expanded(
+            child: _cartManager.items.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.shopping_cart_outlined,
+                          size: 80,
+                          color: Colors.grey.shade300,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          '¡Tu carrito está vacío!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        // Botón para ir a agregar productos
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false,
+                            ); // Ir al home_screen
+                          },
+                          icon: const Icon(Icons.add_shopping_cart),
+                          label: const Text('Agregar Productos'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Stack(
+                    children: [
+                      // Lista de Ítems del Carrito
+                      ListView.builder(
+                        padding: const EdgeInsets.only(
+                          bottom: 250.0,
+                        ), // Padding para el resumen
+                        itemCount: _cartManager.items.length,
+                        itemBuilder: (context, index) {
+                          final item = _cartManager.items[index];
+                          return CartItemCard(
+                            item: item,
+                            primaryColor: primaryColor,
+                            onQuantityChanged:
+                                (change) => _updateQuantity(item.id, change),
+                          );
+                        },
+                      ),
+
+                      // Resumen de Compra Flotante (Checkout)
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CheckoutSummary(
+                          subtotal: _cartManager.subtotal,
+                          deliveryFee: _cartManager.deliveryFee,
+                          total: _cartManager.total,
+                          primaryColor: primaryColor,
+                          cartItems: _cartManager.items,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        ],
       ),
-
-      body:
-          _cartManager.items.isEmpty
-              ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 80,
-                      color: Colors.grey.shade300,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      '¡Tu carrito está vacío!',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    // Botón para ir a agregar productos
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/',
-                          (route) => false,
-                        ); // Ir al home_screen
-                      },
-                      icon: const Icon(Icons.add_shopping_cart),
-                      label: const Text('Agregar Productos'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-              : Stack(
-                children: [
-                  // Lista de Ítems del Carrito
-                  ListView.builder(
-                    padding: const EdgeInsets.only(
-                      bottom: 250.0,
-                    ), // Padding para el resumen
-                    itemCount: _cartManager.items.length,
-                    itemBuilder: (context, index) {
-                      final item = _cartManager.items[index];
-                      return CartItemCard(
-                        item: item,
-                        primaryColor: primaryColor,
-                        onQuantityChanged:
-                            (change) => _updateQuantity(item.id, change),
-                      );
-                    },
-                  ),
-
-                  // Resumen de Compra Flotante (Checkout)
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: CheckoutSummary(
-                      subtotal: _cartManager.subtotal,
-                      deliveryFee: _cartManager.deliveryFee,
-                      total: _cartManager.total,
-                      primaryColor: primaryColor,
-                      cartItems: _cartManager.items,
-                    ),
-                  ),
-                ],
-              ),
     );
   }
 }

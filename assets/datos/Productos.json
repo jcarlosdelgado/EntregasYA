@@ -4,8 +4,8 @@
       "id": 1,
       "name": "Manzanas Rojas",
       "description": "Manzanas rojas frescas y crujientes, perfectas para snacks saludables.",
-      "price": 15.50,
-      "oldPrice": 18.00,
+      "price": 15.5,
+      "oldPrice": 18.0,
       "currency": "Bs",
       "unit": "por Kg",
       "rating": 4.3,
@@ -29,7 +29,7 @@
       "id": 2,
       "name": "Bananas",
       "description": "Bananas maduras y dulces, ricas en potasio y energía natural.",
-      "price": 8.50,
+      "price": 8.5,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por Kg",
@@ -54,8 +54,8 @@
       "id": 3,
       "name": "Carne de Res Premium",
       "description": "Corte premium de carne de res, tierna y jugosa para asados especiales.",
-      "price": 75.00,
-      "oldPrice": 85.00,
+      "price": 75.0,
+      "oldPrice": 85.0,
       "currency": "Bs",
       "unit": "por Kg",
       "rating": 4.8,
@@ -79,7 +79,7 @@
       "id": 4,
       "name": "Salmón Fresco",
       "description": "Filete de salmón fresco del Atlántico, rico en omega-3.",
-      "price": 12000.00,
+      "price": 12000.0,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por Kg",
@@ -104,8 +104,8 @@
       "id": 5,
       "name": "Leche Entera PIL",
       "description": "Leche fresca entera PIL, rica en calcio y proteínas naturales.",
-      "price": 8.50,
-      "oldPrice": 10.00,
+      "price": 8.5,
+      "oldPrice": 10.0,
       "currency": "Bs",
       "unit": "por litro",
       "rating": 4.6,
@@ -129,7 +129,7 @@
       "id": 6,
       "name": "Queso Mozzarella",
       "description": "Queso mozzarella fresco, perfecto para pizzas y ensaladas.",
-      "price": 25.00,
+      "price": 25.0,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por 500g",
@@ -154,7 +154,7 @@
       "id": 7,
       "name": "Pan Francés",
       "description": "Pan francés crujiente recién horneado, ideal para el desayuno.",
-      "price": 4.50,
+      "price": 4.5,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por unidad",
@@ -179,8 +179,8 @@
       "id": 8,
       "name": "Croissants",
       "description": "Croissants de mantequilla artesanales, perfectos para el desayuno.",
-      "price": 12.00,
-      "oldPrice": 15.00,
+      "price": 12.0,
+      "oldPrice": 15.0,
       "currency": "Bs",
       "unit": "por 6 unidades",
       "rating": 4.7,
@@ -204,8 +204,8 @@
       "id": 9,
       "name": "Arroz Premium",
       "description": "Arroz grano largo premium, ideal para todo tipo de comidas.",
-      "price": 18.00,
-      "oldPrice": 22.00,
+      "price": 18.0,
+      "oldPrice": 22.0,
       "currency": "Bs",
       "unit": "por Kg",
       "rating": 4.5,
@@ -229,7 +229,7 @@
       "id": 10,
       "name": "Aceite de Oliva Extra",
       "description": "Aceite de oliva extra virgen importado, ideal para ensaladas.",
-      "price": 45.00,
+      "price": 45.0,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por 500ml",
@@ -254,8 +254,8 @@
       "id": 11,
       "name": "Coca Cola",
       "description": "Refresco Coca Cola clásico, refrescante y burbujeante.",
-      "price": 6.50,
-      "oldPrice": 8.00,
+      "price": 6.5,
+      "oldPrice": 8.0,
       "currency": "Bs",
       "unit": "por 2L",
       "rating": 4.3,
@@ -279,7 +279,7 @@
       "id": 12,
       "name": "Agua Mineral Vital",
       "description": "Agua mineral natural Vital, pura y refrescante.",
-      "price": 3.50,
+      "price": 3.5,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por 2L",
@@ -304,8 +304,8 @@
       "id": 13,
       "name": "Detergente Ariel",
       "description": "Detergente en polvo Ariel, elimina las manchas más difíciles.",
-      "price": 35.00,
-      "oldPrice": 42.00,
+      "price": 35.0,
+      "oldPrice": 42.0,
       "currency": "Bs",
       "unit": "por 1Kg",
       "rating": 4.6,
@@ -329,7 +329,7 @@
       "id": 14,
       "name": "Papel Higiénico Elite",
       "description": "Papel higiénico Elite suave y resistente, pack familiar.",
-      "price": 28.00,
+      "price": 28.0,
       "oldPrice": 0,
       "currency": "Bs",
       "unit": "por 12 rollos",
@@ -354,8 +354,8 @@
       "id": 15,
       "name": "Champú Pantene",
       "description": "Champú Pantene Pro-V, fortalece y nutre el cabello.",
-      "price": 18.50,
-      "oldPrice": 23.00,
+      "price": 18.5,
+      "oldPrice": 23.0,
       "currency": "Bs",
       "unit": "por 400ml",
       "rating": 4.5,
@@ -379,8 +379,8 @@
       "id": 16,
       "name": "Crema Dental Colgate",
       "description": "Crema dental Colgate Total 12, protección completa 24 horas.",
-      "price": 12.00,
-      "oldPrice": 15.00,
+      "price": 12.0,
+      "oldPrice": 15.0,
       "currency": "Bs",
       "unit": "por 150ml",
       "rating": 4.7,
@@ -399,6 +399,231 @@
         "id": 1,
         "title": "SinGrupo"
       }
+    },
+    {
+      "id": 17,
+      "name": "Papa Imilla",
+      "description": "Papa Imilla fresca, ideal para guisos y sopas tradicionales.",
+      "price": 10.5,
+      "oldPrice": 12.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.6,
+      "reviews": 87,
+      "imageUrl": "https://www.argenpapa.com.ar/images/noticias/1503320636_big.jpg",
+      "badge": "Fresco",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 4,
+        "title": "papa"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Papa Huaycha",
+      "description": "Papa Huaycha de textura suave, perfecta para puré y papas fritas.",
+      "price": 11.0,
+      "oldPrice": 13.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.4,
+      "reviews": 65,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQOrUyuz2_Tm44As4i5rN97pe4Nm9dqhz0BV5bnubFm7Xv6wkv0Kwk8x-2phYUJpkZZU0&usqp=CAU",
+      "badge": "",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 4,
+        "title": "papa"
+      }
+    },
+    {
+      "id": 19,
+      "name": "Papa Negra",
+      "description": "Papa negra de alto contenido nutricional, especial para cocer.",
+      "price": 9.5,
+      "oldPrice": 11.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.7,
+      "reviews": 54,
+      "imageUrl": "https://imagenes.elpais.com/resizer/v2/EGFH6EE42KNONPHJIJDVQVKBTA.jpg?auth=e43ceff920e008444c9e3ab4b6622c61f2221d878dd5deb49de72a01e165dbce&width=1960&height=1103&smart=true",
+      "badge": "Oferta",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 4,
+        "title": "papa"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Patata Amarilla",
+      "description": "Patata amarilla de textura suave, ideal para cocer y preparar ensaladas.",
+      "price": 12.0,
+      "oldPrice": 14.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.5,
+      "reviews": 72,
+      "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400",
+      "badge": "Fresco",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 4,
+        "title": "papa"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Papa Cambray",
+      "description": "Papa Cambray pequeña y tierna, perfecta para guarniciones y asados.",
+      "price": 13.5,
+      "oldPrice": 15.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.6,
+      "reviews": 59,
+      "imageUrl": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=400",
+      "badge": "",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 4,
+        "title": "papa"
+      }
+    },
+    {
+      "id": 22,
+      "name": "Zanahoria",
+      "description": "Zanahoria fresca y crujiente, ideal para ensaladas y guisos.",
+      "price": 7.0,
+      "oldPrice": 8.5,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.4,
+      "reviews": 80,
+      "imageUrl": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=400",
+      "badge": "Fresco",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 5,
+        "title": "zanahoria"
+      }
+    },
+    {
+      "id": 23,
+      "name": "Zanahoria Baby",
+      "description": "Zanahoria baby, pequeña y dulce, perfecta para snacks saludables.",
+      "price": 9.0,
+      "oldPrice": 10.0,
+      "currency": "Bs",
+      "unit": "por 500g",
+      "rating": 4.5,
+      "reviews": 45,
+      "imageUrl": "https://images.unsplash.com/photo-1464983953574-0892a716854b?w=400",
+      "badge": "",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 2,
+        "title": "Verduras"
+      },
+      "agrupacion": {
+        "id": 5,
+        "title": "zanahoria"
+      }
+    },
+    {
+      "id": 24,
+      "name": "Manzana Verde",
+      "description": "Manzana verde ácida y crujiente, ideal para ensaladas y jugos.",
+      "price": 16.0,
+      "oldPrice": 18.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.6,
+      "reviews": 98,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXThXu_A8FFWGACEcfPTUa3ALjo0ZI--K-qw&s",
+      "badge": "",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 1,
+        "title": "Frutas"
+      },
+      "agrupacion": {
+        "id": 2,
+        "title": "manzana"
+      }
+    },
+    {
+      "id": 25,
+      "name": "Plátano",
+      "description": "Plátano maduro y dulce, fuente natural de energía.",
+      "price": 8.0,
+      "oldPrice": 9.0,
+      "currency": "Bs",
+      "unit": "por Kg",
+      "rating": 4.5,
+      "reviews": 110,
+      "imageUrl": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400",
+      "badge": "",
+      "category": {
+        "id": 1,
+        "title": "Frutas y Verduras"
+      },
+      "subcategoria": {
+        "id": 3,
+        "title": "Frutas"
+      },
+      "agrupacion": {
+        "id": 7,
+        "title": "platano"
+      }
     }
   ],
   "promociones": [
@@ -406,8 +631,8 @@
       "id": 101,
       "name": "Combo Desayuno Completo",
       "description": "Pan francés + leche + mermelada. Todo lo que necesitas para empezar el día.",
-      "price": 15.90,
-      "oldPrice": 22.00,
+      "price": 15.9,
+      "oldPrice": 22.0,
       "currency": "Bs",
       "unit": "por combo",
       "rating": 4.8,
@@ -431,8 +656,8 @@
       "id": 102,
       "name": "Pack Limpieza Hogar",
       "description": "Detergente + papel higiénico + jabón líquido. Kit completo para el hogar.",
-      "price": 65.00,
-      "oldPrice": 85.00,
+      "price": 65.0,
+      "oldPrice": 85.0,
       "currency": "Bs",
       "unit": "por pack",
       "rating": 4.7,
@@ -449,15 +674,15 @@
       },
       "agrupacion": {
         "id": 1,
-        "title": "SinGrupo" 
+        "title": "SinGrupo"
       }
     },
     {
       "id": 103,
       "name": "Canasta Frutas Tropicales",
       "description": "Manzanas + bananas + naranjas. Frutas frescas seleccionadas.",
-      "price": 35.00,
-      "oldPrice": 45.00,
+      "price": 35.0,
+      "oldPrice": 45.0,
       "currency": "Bs",
       "unit": "por canasta 3Kg",
       "rating": 4.6,
@@ -481,8 +706,8 @@
       "id": 104,
       "name": "Combo Parrillero",
       "description": "Carne de res + salmón + condimentos. Perfecto para asados familiares.",
-      "price": 180.00,
-      "oldPrice": 230.00,
+      "price": 180.0,
+      "oldPrice": 230.0,
       "currency": "Bs",
       "unit": "por combo 2Kg",
       "rating": 4.9,
@@ -506,8 +731,8 @@
       "id": 105,
       "name": "Pack Cuidado Personal",
       "description": "Champú + crema dental + jabón. Cuidado completo para toda la familia.",
-      "price": 42.00,
-      "oldPrice": 55.00,
+      "price": 42.0,
+      "oldPrice": 55.0,
       "currency": "Bs",
       "unit": "por pack",
       "rating": 4.5,
@@ -531,8 +756,8 @@
       "id": 106,
       "name": "Combo Lácteos Premium",
       "description": "Leche + queso mozzarella + yogurt griego. Productos lácteos de calidad.",
-      "price": 48.00,
-      "oldPrice": 60.00,
+      "price": 48.0,
+      "oldPrice": 60.0,
       "currency": "Bs",
       "unit": "por combo",
       "rating": 4.7,

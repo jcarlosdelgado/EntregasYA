@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ihc_app/widgets/cart_sidebar.dart';
 import '../models/product.dart';
 import '../services/product_service.dart';
+import '../services/cart_manager.dart';
 import '../widgets/custom_header.dart';
 import '../widgets/product_card.dart';
 
@@ -22,12 +24,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   late Product _currentProduct;
   List<Product> _variants = [];
   bool _isLoading = true;
+  final CartManager _cartManager = CartManager();
 
   @override
   void initState() {
     super.initState();
     _currentProduct = widget.initialProduct;
+    _cartManager.addListener(_onCartChanged);
     _loadVariants();
+  }
+
+  @override
+  void dispose() {
+    _cartManager.removeListener(_onCartChanged);
+    super.dispose();
+  }
+
+  void _onCartChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadVariants() async {
@@ -62,14 +78,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      endDrawer: const CartSidebar(),
       body: Column(
         children: [
           // Header igual al home
           CustomHeader(
-            cartItemCount: 2,
-            onCartTapped: () {
-              debugPrint('Ir al carrito');
-            },
+            cartItemCount: _cartManager.itemCount, // Usar contador dinámico
             onSearchChanged: () {
               debugPrint('Búsqueda');
             },
@@ -312,6 +326,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           child: ElevatedButton(
                             onPressed: () {
+                              _cartManager.addItem(
+                                CartItem(
+                                  id: _currentProduct.id.toString(),
+                                  name: _currentProduct.name,
+                                  price: _currentProduct.price,
+                                  imageUrl: _currentProduct.imageUrl,
+                                  unit: _currentProduct.unit,
+                                  quantity: 1,
+                                ),
+                              );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('${_currentProduct.name} agregado al carrito'),

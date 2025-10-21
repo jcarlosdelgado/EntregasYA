@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:ihc_app/widgets/cart_sidebar.dart';
 
 class CustomHeader extends StatelessWidget {
   final String title;
   final int cartItemCount;
-  final VoidCallback? onCartTapped;
   final VoidCallback? onSearchChanged;
   final String searchHint;
   final bool showSearchBar;
+  final bool showCartButton;
 
   const CustomHeader({
     super.key,
     this.title = 'Te lo llevo',
     this.cartItemCount = 0,
-    this.onCartTapped,
     this.onSearchChanged,
     this.searchHint = 'Buscar productos...',
     this.showSearchBar = true,
+    this.showCartButton = true, 
   });
+
+  void _openCartSidebar(BuildContext context) {
+    Scaffold.of(context).openEndDrawer();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bool noCartNoSearch = !showCartButton && !showSearchBar;
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -62,56 +68,56 @@ class CustomHeader extends StatelessWidget {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: onCartTapped,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            // Cambia Image.asset por Icon
-                            child: Icon(
-                              Icons.shopping_cart_rounded,
-                              color: Colors.black,
-                              size: 24,
+                  if (showCartButton) // NUEVO: solo muestra si es true
+                    GestureDetector(
+                      onTap: () => _openCartSidebar(context),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.shopping_cart_rounded,
+                                color: Colors.black,
+                                size: 24,
+                              ),
                             ),
                           ),
-                        ),
-                        if (cartItemCount > 0)
-                          Positioned(
-                            right: -2,
-                            top: -2,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 2),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFFFFB300), // Naranja
-                                shape: BoxShape.circle,
-                              ),
-                              constraints: const BoxConstraints(
-                                minWidth: 20,
-                                minHeight: 20,
-                              ),
-                              child: Text(
-                                cartItemCount.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                          if (cartItemCount > 0)
+                            Positioned(
+                              right: -2,
+                              top: -2,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFFFB300), // Naranja
+                                  shape: BoxShape.circle,
                                 ),
-                                textAlign: TextAlign.center,
+                                constraints: const BoxConstraints(
+                                  minWidth: 20,
+                                  minHeight: 20,
+                                ),
+                                child: Text(
+                                  cartItemCount.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               ),
               if (showSearchBar) ...[
@@ -167,6 +173,8 @@ class CustomHeader extends StatelessWidget {
                   ),
                 ),
               ],
+              if (noCartNoSearch)
+                const SizedBox(height: 5), // Altura extra si no hay search ni carrito
             ],
           ),
         ),

@@ -4,8 +4,8 @@ import '../models/product.dart';
 import '../widgets/category_square_card.dart';
 import '../widgets/product_card.dart';
 import '../widgets/custom_header.dart';
+import '../widgets/cart_sidebar.dart';
 import '../services/cart_manager.dart';
-import 'category_products_screen.dart';
 import 'product_detail_screen.dart';
 import '../services/product_service.dart';
 import '../widgets/see_more_card.dart';
@@ -68,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       // Cargar datos usando ProductService
       final categories = await ProductService.loadCategories();
-      final products = await ProductService.loadProducts();
-      final promociones = await ProductService.loadPromociones();
+      final products = await ProductService.loadProducts(limit: 10);
+      final promociones = await ProductService.loadPromociones(limit: 10);
 
       setState(() {
         _categories = categories;
@@ -115,7 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white, 
+      backgroundColor: Colors.white,
+      endDrawer: const CartSidebar(),
       body: _isLoading 
         ? const Center(child: CircularProgressIndicator())
         : Column(
@@ -123,12 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               CustomHeader(
                 cartItemCount: _cartManager.itemCount,
-                onCartTapped: () {
-                  Navigator.pushNamed(context, '/cart');
-                },
                 onSearchChanged: () {
                   debugPrint('Búsqueda cambiada');
                 },
+                showCartButton: false,
               ),
               
               Expanded(
@@ -152,15 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.only(right: 16),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
+                                  Navigator.pushNamed(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CategoryProductsScreen(
-                                        categoryId: category.id,
-                                        categoryTitle: category.title,
-                                        categoryImageUrl: category.imageUrl,
-                                      ),
-                                    ),
+                                    '/category_products',
+                                    arguments: {
+                                      'categoryId': category.id,
+                                      'categoryTitle': category.title,
+                                      'categoryImageUrl': category.imageUrl,
+                                    },
                                   );
                                 },
                                 child: CategorySquareCard(
@@ -209,6 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 200,
                                 onTap: () {
                                   debugPrint('Ver más promociones');
+                                  Navigator.pushNamed(context, '/all_promos');
                                 },
                               );
                             }
@@ -254,6 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 200,
                                 onTap: () {
                                   debugPrint('Ver más destacados');
+                                  Navigator.pushNamed(context, '/all_products');
                                 },
                               );
                             }

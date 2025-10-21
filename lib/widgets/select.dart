@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class Select extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final IconData? icon;
   final bool isSelected;
   final VoidCallback onTap;
 
   const Select({
     super.key,
     required this.title,
-    required this.icon,
+    this.icon, // Opcional
     required this.isSelected,
     required this.onTap,
   });
@@ -34,19 +34,20 @@ class Select extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.deepOrange : Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(8),
-          )
-          ,
-          child: Icon(
-            icon,
-            color: isSelected ? Colors.white : Colors.grey.shade600,
-            size: 20,
-          ),
-        ),
+        leading: icon != null // Solo muestra si hay icono
+            ? Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.deepOrange : Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  icon,
+                  color: isSelected ? Colors.white : Colors.grey.shade600,
+                  size: 20,
+                ),
+              )
+            : null,
         title: Text(
           title,
           style: TextStyle(
@@ -55,14 +56,13 @@ class Select extends StatelessWidget {
             color: isSelected ? Colors.deepOrange.shade700 : Colors.black87,
           ),
         ),
-        trailing:
-            isSelected
-                ? Icon(Icons.check_circle, color: Colors.deepOrange, size: 22)
-                : Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.grey.shade400,
-                  size: 16,
-                ),
+          trailing: isSelected
+              ? Icon(
+                  Icons.check_circle,
+                  color: Colors.deepOrange,
+                  size: 20,
+                )
+              : null,
         onTap: onTap,
       ),
     );

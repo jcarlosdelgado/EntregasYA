@@ -11,35 +11,54 @@ class ProductService {
 
   static Future<List<Category>> loadCategories() async {
     try {
-      final String response = await rootBundle.loadString(categoriasPath);
-      final data = json.decode(response);
-      return (data['categorias'] as List)
-          .map((item) => Category.fromJson(item))
+      final String responseCat = await rootBundle.loadString(categoriasPath);
+      final String responseSub = await rootBundle.loadString(subcategoriasPath);
+      final dataCat = json.decode(responseCat);
+      final dataSub = json.decode(responseSub);
+
+      final subcategorias = (dataSub['subcategorias'] as List)
+          .map((item) => SubCategoria.fromJson(item))
+          .toList();
+
+      return (dataCat['categorias'] as List)
+          .map((item) {
+            final catId = item['id'];
+            final subs = subcategorias.where((s) => s.categoryId == catId).toList();
+            return Category.fromJson(item, subcategorias: subs);
+          })
           .toList();
     } catch (e) {
       throw Exception('Error loading categories: $e');
     }
   }
 
-  static Future<List<Product>> loadProducts() async {
+  static Future<List<Product>> loadProducts({int? limit}) async {
     try {
       final String response = await rootBundle.loadString(productosPath);
       final data = json.decode(response);
-      return (data['productos'] as List)
+      final products = (data['productos'] as List)
           .map((item) => Product.fromJson(item))
           .toList();
+      if (limit != null && limit > 0) {
+        return products.take(limit).toList();
+      }
+      return products;
     } catch (e) {
       throw Exception('Error loading products: $e');
     }
   }
 
-  static Future<List<Product>> loadPromociones() async {
+  static Future<List<Product>> loadPromociones({int? limit}) async {
     try {
       final String response = await rootBundle.loadString(productosPath);
       final data = json.decode(response);
-      return (data['promociones'] as List)
+      final promociones = (data['promociones'] as List)
           .map((item) => Product.fromJson(item))
           .toList();
+      if (limit != null && limit > 0) {
+        return promociones.take(limit).toList();
+      }
+      return promociones;
     } catch (e) {
       throw Exception('Error loading promociones: $e');
     }
@@ -67,9 +86,13 @@ class ProductService {
   }
 
   /// Obtiene los productos de una agrupación, de una categoría dada
-  static Future<List<Product>> getProductsByAgrupacion(int agrupacionId, int categoryId) async {
+  static Future<List<Product>> getProductsByAgrupacion(int agrupacionId, int? categoryId) async {
     List<Product> products;
+    if (categoryId != null) {
       products = await getProductsByCategory(categoryId);
+    } else {
+      products = await loadProducts();
+    }
     // Filtrar por agrupación
     return products.where((p) => (p.agrupacion?.id ?? p.id) == agrupacionId).toList();
   }
@@ -87,4 +110,5 @@ class ProductService {
       throw Exception('Error loading subcategorias: $e');
     }
   }
+ 
 }

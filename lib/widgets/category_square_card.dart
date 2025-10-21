@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Widget reutilizable para mostrar una tarjeta de categoría cuadrada.
-/// Si se pasa [icon] se muestra el icono, si se pasa [imageUrl] se muestra la imagen.
 class CategorySquareCard extends StatelessWidget {
   final String title;
   final Color primaryColor;

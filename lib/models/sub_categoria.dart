@@ -1,12 +1,12 @@
 class SubCategoria {
   final int id;
   final String title;
-  final int categoryId;
+  final int? categoryId;
 
   const SubCategoria({
     required this.id,
     required this.title,
-    required this.categoryId,
+    this.categoryId,
   });
 
   factory SubCategoria.fromJson(Map<String, dynamic> json) {
