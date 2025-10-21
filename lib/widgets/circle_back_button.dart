@@ -10,7 +10,7 @@ class CircleBackButton extends StatelessWidget {
   const CircleBackButton({
     Key? key,
     this.onTap,
-    this.size = 56,
+    this.size = 40,
     this.color = const Color(0xFFFF6B35),
     this.iconColor = Colors.white,
     this.elevation = 8,

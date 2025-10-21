@@ -9,6 +9,7 @@ import 'product_detail_screen.dart';
 import '../widgets/select.dart';
 import '../services/cart_manager.dart';
 import '../models/category.dart';
+import '../widgets/circle_back_button.dart';
 
 class CategoryProductsScreen extends StatefulWidget {
   final int categoryId;
@@ -374,27 +375,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               ),
               Positioned(
                 left: 16,
-                top: 16,
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 20,
-                      color: Colors.black87,
-                    ),
-                  ),
+                top: 10,
+                child: CircleBackButton(
+                  color : const Color.fromARGB(255, 255, 255, 255),
+                  iconColor : const Color.fromARGB(255, 3, 3, 3),
                 ),
               ),
               Positioned(

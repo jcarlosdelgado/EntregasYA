@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ihc_app/services/cart_manager.dart';
-import 'package:ihc_app/screens/payment_screen.dart';
+import 'package:ihc_app/screens/payment/payment_screen.dart';
 
 class CartSidebar extends StatefulWidget {
   const CartSidebar({super.key});
@@ -36,6 +36,34 @@ class _CartSidebarState extends State<CartSidebar> {
     _cartManager.updateQuantity(itemId, currentQuantity + change);
   }
 
+  void _showClearCartDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Limpiar Carrito'),
+          content: const Text('¿Estás seguro de que quieres eliminar todos los productos del carrito?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                _cartManager.clear();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Eliminar',
+                style: TextStyle(color: primaryColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -44,28 +72,69 @@ class _CartSidebarState extends State<CartSidebar> {
         color: Colors.white,
         child: Column(
           children: [
-            // Header del sidebar
+            // Header del sidebar mejorado
             Container(
-              height: 100,
               decoration: BoxDecoration(
                 color: primaryColor,
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(16),
+                ),
               ),
               child: SafeArea(
+                bottom: false,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.only(left: 20, right: 12, top: 16, bottom: 10),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.close, color: Colors.white),
+                      // Título y subtítulo
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Carrito de Compras',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              '${_cartManager.itemCount} productos',
+                              style: TextStyle(
+                                color: Colors.grey.shade200,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Tu Carrito',
-                        style: TextStyle(
+                      // Ícono de basurero
+                      IconButton(
+                        onPressed: () {
+                          _showClearCartDialog(context);
+                        },
+                        icon: const Icon(Icons.delete_outline, color: Colors.black, size: 22),
+                        padding: const EdgeInsets.only(top: 2, right: 2, left: 2, bottom: 2),
+                        constraints: const BoxConstraints(),
+                        splashRadius: 22,
+                      ),
+                      // Botón de cerrar
+                      Container(
+                        margin: const EdgeInsets.only(left: 6, right: 2),
+                        decoration: const BoxDecoration(
                           color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(Icons.close, color: Colors.black, size: 20),
+                          padding: const EdgeInsets.all(4),
+                          constraints: const BoxConstraints(),
+                          splashRadius: 20,
                         ),
                       ),
                     ],
@@ -138,8 +207,8 @@ class _CartSidebarState extends State<CartSidebar> {
                         // Resumen de compra
                         CheckoutSummary(
                           subtotal: _cartManager.subtotal,
-                          deliveryFee: _cartManager.deliveryFee,
-                          total: _cartManager.total,
+                          deliveryFee: 0.0,
+                          total: _cartManager.subtotal,
                           primaryColor: primaryColor,
                           cartItems: _cartManager.items,
                         ),
@@ -307,7 +376,7 @@ class CartItemCard extends StatelessWidget {
 
 class CheckoutSummary extends StatelessWidget {
   final double subtotal;
-  final double deliveryFee;
+  final double deliveryFee; // ignorado
   final double total;
   final Color primaryColor;
   final List<CartItem> cartItems;
@@ -315,7 +384,7 @@ class CheckoutSummary extends StatelessWidget {
   const CheckoutSummary({
     super.key,
     required this.subtotal,
-    required this.deliveryFee,
+    required this.deliveryFee, // ignorado
     required this.total,
     required this.primaryColor,
     required this.cartItems,
@@ -367,7 +436,6 @@ class CheckoutSummary extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildDetailRow('Subtotal', subtotal),
-          _buildDetailRow('Envío', deliveryFee),
           const Divider(height: 16, thickness: 1),
           Container(
             padding: const EdgeInsets.all(12.0),

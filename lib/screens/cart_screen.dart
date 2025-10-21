@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ihc_app/services/cart_manager.dart';
-import 'package:ihc_app/screens/payment_screen.dart';
-import 'package:ihc_app/widgets/custom_header.dart'; // Agrega el import
+import 'package:ihc_app/widgets/custom_header.dart';
 
 // Carrito de compras usando CartManager para el estado
 class CartScreen extends StatefulWidget {
@@ -124,8 +123,8 @@ class _CartScreenState extends State<CartScreen> {
                         alignment: Alignment.bottomCenter,
                         child: CheckoutSummary(
                           subtotal: _cartManager.subtotal,
-                          deliveryFee: _cartManager.deliveryFee,
-                          total: _cartManager.total,
+                          deliveryFee: 0.0, // ignorado
+                          total: _cartManager.subtotal,
                           primaryColor: primaryColor,
                           cartItems: _cartManager.items,
                         ),
@@ -344,8 +343,6 @@ class CheckoutSummary extends StatelessWidget {
         children: [
           // Sección de Resumen
           _buildDetailRow('Subtotal de Productos', subtotal),
-          _buildDetailRow('Costo de Envío', deliveryFee),
-
           const Divider(height: 20, thickness: 1),
 
           // Sección de Total y Botón de Pago
@@ -365,16 +362,14 @@ class CheckoutSummary extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navegar a la pantalla de pago con los datos del carrito
-                      Navigator.push(
+                      // Navegar a la pantalla de pago con los datos del carrito usando ruta
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => PaymentScreen(
-                                totalAmount: total,
-                                cartItems: cartItems,
-                              ),
-                        ),
+                        '/payment',
+                        arguments: {
+                          'totalAmount': total,
+                          'cartItems': cartItems,
+                        },
                       );
                     },
                     style: ElevatedButton.styleFrom(

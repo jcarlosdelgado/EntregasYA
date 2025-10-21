@@ -8,7 +8,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback? onAddToCart;
   // Nuevo: ancho opcional para listas horizontales; en grillas se omite.
   final double? width;
-  final EdgeInsetsGeometry? margin; // nuevo
+  final EdgeInsetsGeometry? margin; 
 
   const ProductCard({
     super.key,
@@ -16,8 +16,8 @@ class ProductCard extends StatelessWidget {
     required this.primaryColor,
     this.onTap,
     this.onAddToCart,
-    this.width, // ...nuevo...
-    this.margin, // nuevo
+    this.width, 
+    this.margin, 
   });
 
   @override

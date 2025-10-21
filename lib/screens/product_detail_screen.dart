@@ -5,6 +5,7 @@ import '../services/product_service.dart';
 import '../services/cart_manager.dart';
 import '../widgets/custom_header.dart';
 import '../widgets/product_card.dart';
+import '../widgets/circle_back_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product initialProduct;
@@ -96,28 +97,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Botón de regreso
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.arrow_back_ios_new_rounded,
-                                size: 20,
-                                color: Colors.grey.shade600,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Volver',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Botón de regreso personalizado
+                        CircleBackButton(),
                         const SizedBox(height: 16),
 
                         // Imagen del producto principal
