@@ -21,17 +21,23 @@ class QRPaymentScreen extends StatefulWidget {
 class _QRPaymentScreenState extends State<QRPaymentScreen> {
   final Color primaryColor = const Color(0xFFFF6B35); // Naranja principal
   bool isProcessing = false;
+  bool _termsAccepted = false;
 
   Future<void> _processPayment() async {
     setState(() => isProcessing = true);
     await Future.delayed(const Duration(seconds: 2));
     setState(() => isProcessing = false);
 
+    // Calcular el total correcto basándose en los items del carrito
+    final subtotal = widget.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    final deliveryFee = 5.0;
+    final calculatedTotal = subtotal + deliveryFee;
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => DeliveryTrackingScreen(
-          totalAmount: widget.totalAmount,
+          totalAmount: calculatedTotal,
           orderNumber:
               'ORD-${(DateTime.now().millisecondsSinceEpoch % 10000).toString().padLeft(4, '0')}',
           cartItems: widget.cartItems,
@@ -86,11 +92,8 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                 children: [
                   _buildOrderSummary(),
                   const SizedBox(height: 24),
-                  _buildPaymentMethodIndicator(),
+                  _buildQRForm(),
                   const SizedBox(height: 24),
-                  _buildQRSection(),
-                  const SizedBox(height: 24),
-                  _buildInstructions(),
                 ],
               ),
             ),
@@ -102,6 +105,11 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
   }
 
   Widget _buildOrderSummary() {
+    // Calcular el subtotal basándose en los items del carrito pasados como parámetro
+    final subtotal = widget.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    final deliveryFee = 5.0; // Costo fijo de envío
+    final calculatedTotal = subtotal + deliveryFee;
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -131,7 +139,37 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
               ),
               Text(
-                'Bs ${widget.totalAmount.toStringAsFixed(2)}',
+                'Bs ${subtotal.toStringAsFixed(2)}',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Costo de envío',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              ),
+              Text(
+                'Bs ${deliveryFee.toStringAsFixed(2)}',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Divider(color: Colors.grey.shade300, height: 1),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Bs ${calculatedTotal.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -145,59 +183,12 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
     );
   }
 
-  Widget _buildPaymentMethodIndicator() {
+  Widget _buildQRForm() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 36),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: primaryColor, width: 1),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.qr_code,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Código QR',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
-                  ),
-                ),
-                Text(
-                  'Pago rápido con código QR',
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          Icon(Icons.check_circle, color: primaryColor, size: 24),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildQRSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
@@ -207,81 +198,76 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Escanea el código QR',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            'Pago con QR',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 20),
-          Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey.shade300),
-            ),
-            child: const Center(
-              child: Icon(Icons.qr_code, size: 120, color: Colors.grey),
+          const SizedBox(height: 6),
+          const Text(
+            'Escanea este código con tu app bancaria\npara completar la compra',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14, color: Colors.black54),
+          ),
+          const SizedBox(height: 18),
+          Center(
+            child: Container(
+              width: 160,
+              height: 160,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey.shade300),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.08),
+                    blurRadius: 6,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: ClipRRect(
+                  
+                  child: Image.network(
+                    'https://docs.lightburnsoftware.com/legacy/img/QRCode/ExampleCode.png',
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.qr_code, size: 80, color: Colors.grey),
+                  ),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            'Total: Bs ${widget.totalAmount.toStringAsFixed(2)}',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: primaryColor,
+          const Text(
+            'Tu pedido se validará automáticamente cuando el pago sea recibido',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13, color: Colors.black45),
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
+            decoration: BoxDecoration(
+              color: Color(0xFFFFE5DE),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Text(
+              'Esperando pago...',
+              style: TextStyle(color: Color(0xFFFF6B35), fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
   }
+  
 
-  Widget _buildInstructions() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.blue.shade200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.info_outline, color: Colors.blue.shade700, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                'Instrucciones de pago',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue.shade700,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            '1. Abre la app de tu banco o billetera digital\n'
-            '2. Selecciona la opción "Pagar con QR"\n'
-            '3. Escanea el código QR mostrado arriba\n'
-            '4. Confirma el pago por Bs ${widget.totalAmount.toStringAsFixed(2)}\n'
-            '5. Presiona "Confirmar Pago" cuando hayas completado la transacción',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.blue.shade700,
-              height: 1.4,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+  
   Widget _buildPaymentButton() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -305,6 +291,7 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
+            disabledBackgroundColor: Colors.grey.shade300,
           ),
           child: isProcessing
               ? const SizedBox(
@@ -316,7 +303,7 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                   ),
                 )
               : const Text(
-                  'CONFIRMAR PAGO',
+                  'Confirmar pago',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

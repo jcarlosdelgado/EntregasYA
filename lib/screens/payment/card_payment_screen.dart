@@ -19,6 +19,24 @@ class CardPaymentScreen extends StatefulWidget {
 }
 
 class _CardPaymentScreenState extends State<CardPaymentScreen> {
+  Widget _buildCardChip(String label, Color bgColor, Color textColor) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 13,
+          letterSpacing: 1.2,
+        ),
+      ),
+    );
+  }
   final Color primaryColor = const Color(0xFFFF6B35); // Naranja principal
   bool isProcessing = false;
   
@@ -27,6 +45,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
   final _expiryController = TextEditingController();
   final _cvvController = TextEditingController();
   final _nameController = TextEditingController();
+  bool _termsAccepted = false;
 
   @override
   void dispose() {
@@ -43,11 +62,16 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
       await Future.delayed(const Duration(seconds: 2));
       setState(() => isProcessing = false);
 
+      // Calcular el total correcto basándose en los items del carrito
+      final subtotal = widget.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+      final deliveryFee = 5.0;
+      final calculatedTotal = subtotal + deliveryFee;
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => DeliveryTrackingScreen(
-            totalAmount: widget.totalAmount,
+            totalAmount: calculatedTotal,
             orderNumber:
                 'ORD-${(DateTime.now().millisecondsSinceEpoch % 10000).toString().padLeft(4, '0')}',
             cartItems: widget.cartItems,
@@ -105,8 +129,6 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
                   children: [
                     _buildOrderSummary(),
                     const SizedBox(height: 24),
-                    _buildPaymentMethodIndicator(),
-                    const SizedBox(height: 24),
                     _buildCardForm(),
                   ],
                 ),
@@ -120,6 +142,11 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
   }
 
   Widget _buildOrderSummary() {
+    // Calcular el subtotal basándose en los items del carrito pasados como parámetro
+    final subtotal = widget.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    final deliveryFee = 5.0; // Costo fijo de envío
+    final calculatedTotal = subtotal + deliveryFee;
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -149,7 +176,37 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
               ),
               Text(
-                'Bs ${widget.totalAmount.toStringAsFixed(2)}',
+                'Bs ${subtotal.toStringAsFixed(2)}',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Costo de envío',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              ),
+              Text(
+                'Bs ${deliveryFee.toStringAsFixed(2)}',
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Divider(color: Colors.grey.shade300, height: 1),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Bs ${calculatedTotal.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -158,53 +215,6 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPaymentMethodIndicator() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: primaryColor, width: 1),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.credit_card,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tarjeta de Crédito/Débito',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
-                  ),
-                ),
-                Text(
-                  'Visa, Mastercard, American Express',
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          Icon(Icons.check_circle, color: primaryColor, size: 24),
         ],
       ),
     );
@@ -227,15 +237,32 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Información de la tarjeta',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          // Chips de tarjetas
+          Row(
+            children: [
+              _buildCardChip('VISA', Colors.blue, Colors.white),
+              const SizedBox(width: 8),
+              _buildCardChip('MC', Colors.red, Colors.white),
+              const SizedBox(width: 8),
+              _buildCardChip('AMEX', Colors.lightBlue.shade700, Colors.white),
+            ],
           ),
           const SizedBox(height: 16),
+          const Text(
+            'Pago con Tarjeta',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Ingresa los datos de tu tarjeta para completar el pago',
+            style: TextStyle(fontSize: 14, color: Colors.black54),
+          ),
+          const SizedBox(height: 20),
           _buildTextField(
             'Número de tarjeta',
             '1234 5678 9012 3456',
             _cardNumberController,
+            icon: Icons.credit_card,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Ingrese el número de tarjeta';
@@ -248,8 +275,8 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
             children: [
               Expanded(
                 child: _buildTextField(
-                  'MM/YY',
-                  '12/25',
+                  'Fecha de expiración',
+                  'MM/AA',
                   _expiryController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -287,6 +314,40 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
               return null;
             },
           ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Checkbox(
+                value: _termsAccepted,
+                onChanged: (value) {
+                  setState(() {
+                    _termsAccepted = value ?? false;
+                  });
+                },
+                activeColor: primaryColor,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(fontSize: 13, color: Colors.black87),
+                    children: [
+                      const TextSpan(text: 'Acepto la '),
+                      TextSpan(
+                        text: 'política de privacidad',
+                        style: const TextStyle(color: Colors.red, decoration: TextDecoration.underline),
+                        // on enter, you could add gesture recognizer
+                      ),
+                      const TextSpan(text: ' y '),
+                      TextSpan(
+                        text: 'términos del servicio',
+                        style: const TextStyle(color: Colors.red, decoration: TextDecoration.underline),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -297,6 +358,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
     String hintText,
     TextEditingController controller, {
     String? Function(String?)? validator,
+    IconData? icon,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,6 +373,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
           validator: validator,
           decoration: InputDecoration(
             hintText: hintText,
+            prefixIcon: icon != null ? Icon(icon, color: Colors.grey) : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(color: Colors.grey.shade300),
@@ -334,6 +397,11 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
   }
 
   Widget _buildPaymentButton() {
+    // Calcular el total correcto basándose en los items del carrito
+    final subtotal = widget.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    final deliveryFee = 5.0;
+    final calculatedTotal = subtotal + deliveryFee;
+    
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -349,7 +417,7 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: isProcessing ? null : _processPayment,
+          onPressed: isProcessing || !_termsAccepted ? null : _processPayment,
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -366,13 +434,21 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 )
-              : Text(
-                  'PAGAR Bs ${widget.totalAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.lock, color: Colors.white, size: 22),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Pagar Bs ${calculatedTotal.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
         ),
       ),

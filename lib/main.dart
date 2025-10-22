@@ -6,6 +6,7 @@ import 'package:ihc_app/screens/delivery_tracking_screen.dart';
 import 'package:ihc_app/screens/order_completed_screen.dart';
 import 'package:ihc_app/screens/order_history_screen.dart';
 import 'package:ihc_app/screens/rating_screen.dart';
+import 'package:ihc_app/screens/address_management_screen.dart';
 import 'package:ihc_app/services/notification_service.dart';
 import 'package:ihc_app/screens/category_products_screen.dart';
 import 'package:ihc_app/screens/payment/payment_screen.dart';
@@ -62,6 +63,7 @@ class GroceryApp extends StatelessWidget {
           return PaymentScreen(
             totalAmount: args != null && args['totalAmount'] != null ? args['totalAmount'] as double : 0,
             cartItems: args != null && args['cartItems'] != null ? List.from(args['cartItems']) : [],
+            deliveryAddress: args?['deliveryAddress'],
           );
         },
         '/tracking':
@@ -99,6 +101,7 @@ class GroceryApp extends StatelessWidget {
               categoryTitle: 'Promociones',
               categoryImageUrl: 'https://www.prexus.co/uploads/1/3/0/6/13063909/promociones_orig.jpg',
             ),
+        '/address_management': (context) => const AddressManagementScreen(),
       },
     );
   }
