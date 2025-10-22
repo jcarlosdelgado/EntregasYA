@@ -1,15 +1,6 @@
-class ProductCategory {
-  final int id;
-  final String title;
-  const ProductCategory({required this.id, required this.title});
-
-  factory ProductCategory.fromJson(Map<String, dynamic> json) {
-    return ProductCategory(
-      id: json['id'],
-      title: json['title'],
-    );
-  }
-}
+import 'agrupacion.dart';
+import 'category.dart';
+import 'sub_categoria.dart';
 
 class Product {
   final int id;
@@ -23,7 +14,10 @@ class Product {
   final int reviews;
   final String imageUrl;
   final String badge;
-  final ProductCategory category;
+  final Category category;
+  final Agrupacion? agrupacion;
+  final SubCategoria? subcategoria;
+
 
   const Product({
     required this.id,
@@ -38,6 +32,8 @@ class Product {
     required this.imageUrl,
     required this.badge,
     required this.category,
+    this.agrupacion, 
+    this.subcategoria,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -53,7 +49,13 @@ class Product {
       reviews: json['reviews'],
       imageUrl: json['imageUrl'],
       badge: json['badge'],
-      category: ProductCategory.fromJson(json['category']),
+      category: Category.fromJson(json['category']),
+      agrupacion: json['agrupacion'] != null
+          ? Agrupacion.fromJson(json['agrupacion'])
+          : null, 
+      subcategoria: json['subcategoria'] != null
+          ? SubCategoria.fromJson(json['subcategoria'])
+          : null,
     );
   }
 

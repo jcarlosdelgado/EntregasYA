@@ -1,0 +1,104 @@
+{
+  "subcategorias": [
+    {
+      "id": 1,
+      "title": "Frutas",
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "title": "Verduras",
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "title": "Carnes Rojas",
+      "categoryId": 2
+    },
+    {
+      "id": 4,
+      "title": "Pescados",
+      "categoryId": 2
+    },
+    {
+      "id": 5,
+      "title": "Leches",
+      "categoryId": 3
+    },
+    {
+      "id": 6,
+      "title": "Quesos",
+      "categoryId": 3
+    },
+    {
+      "id": 7,
+      "title": "Panes",
+      "categoryId": 4
+    },
+    {
+      "id": 8,
+      "title": "Bollería",
+      "categoryId": 4
+    },
+    {
+      "id": 9,
+      "title": "Granos y Cereales",
+      "categoryId": 5
+    },
+    {
+      "id": 10,
+      "title": "Aceites y Vinagres",
+      "categoryId": 5
+    },
+    {
+      "id": 11,
+      "title": "Refrescos",
+      "categoryId": 6
+    },
+    {
+      "id": 12,
+      "title": "Aguas",
+      "categoryId": 6
+    },
+    {
+      "id": 13,
+      "title": "Detergentes",
+      "categoryId": 7
+    },
+    {
+      "id": 14,
+      "title": "Papel y Pañuelos",
+      "categoryId": 7
+    },
+    {
+      "id": 15,
+      "title": "Cuidado Cabello",
+      "categoryId": 8
+    },
+    {
+      "id": 16,
+      "title": "Cuidado Dental",
+      "categoryId": 8
+    },
+    {
+      "id": 17,
+      "title": "Combos Limpieza",
+      "categoryId": 7
+    },
+    {
+      "id": 18,
+      "title": "Combos Carnes",
+      "categoryId": 2
+    },
+    {
+      "id": 19,
+      "title": "Combos Cuidado",
+      "categoryId": 8
+    },
+    {
+      "id": 20,
+      "title": "Combos Lácteos",
+      "categoryId": 3
+    }
+  ]
+}

@@ -8,7 +8,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback? onAddToCart;
   // Nuevo: ancho opcional para listas horizontales; en grillas se omite.
   final double? width;
-  final EdgeInsetsGeometry? margin; // nuevo
+  final EdgeInsetsGeometry? margin; 
 
   const ProductCard({
     super.key,
@@ -16,8 +16,8 @@ class ProductCard extends StatelessWidget {
     required this.primaryColor,
     this.onTap,
     this.onAddToCart,
-    this.width, // ...nuevo...
-    this.margin, // nuevo
+    this.width, 
+    this.margin, 
   });
 
   @override
@@ -75,34 +75,35 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Badge de descuento
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade500,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.orange.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
+                // Badge de descuento solo si no está vacío
+                if (product.badge.trim().isNotEmpty)
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.shade500,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        product.badge,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10,
                         ),
-                      ],
-                    ),
-                    child: Text(
-                      product.badge,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 10,
                       ),
                     ),
                   ),
-                ),
               ],
             ),
             

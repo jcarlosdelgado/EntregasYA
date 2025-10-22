@@ -34,6 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  animated_splash_screen: ^1.3.0
+  lottie: ^3.3.1
   flutter_local_notifications: ^17.2.2
 
 dev_dependencies:
@@ -70,8 +72,9 @@ flutter:
     - assets/images/categorias/panaderia.png
     - assets/datos/Productos.json
     - assets/datos/Categorias.json
-    - assets/carrito-de-compras.png
+    - assets/datos/Subcategorias.json
     - assets/noisePainter.png
+    - assets/Lottie/Te_lo_llevo.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

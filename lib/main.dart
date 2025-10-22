@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:ihc_app/screens/main_screen.dart';
+import 'package:ihc_app/screens/main_screen.dart'; 
+import 'package:ihc_app/screens/animation/splashScreen.dart';
 import 'package:ihc_app/screens/cart_screen.dart';
-import 'package:ihc_app/screens/payment_screen.dart';
 import 'package:ihc_app/screens/delivery_tracking_screen.dart';
 import 'package:ihc_app/screens/order_completed_screen.dart';
 import 'package:ihc_app/screens/order_history_screen.dart';
 import 'package:ihc_app/screens/rating_screen.dart';
-import 'package:ihc_app/screens/test_flow_screen.dart';
+import 'package:ihc_app/screens/address_management_screen.dart';
 import 'package:ihc_app/services/notification_service.dart';
+import 'package:ihc_app/screens/category_products_screen.dart';
+import 'package:ihc_app/screens/payment/payment_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,11 +53,18 @@ class GroceryApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      home: const SplashScreen(),
       routes: {
+        '/main': (context) => const MainScreen(),
         '/cart': (context) => const CartScreen(),
-        '/payment':
-            (context) => const PaymentScreen(totalAmount: 0, cartItems: []),
+        '/payment': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+          return PaymentScreen(
+            totalAmount: args != null && args['totalAmount'] != null ? args['totalAmount'] as double : 0,
+            cartItems: args != null && args['cartItems'] != null ? List.from(args['cartItems']) : [],
+            deliveryAddress: args?['deliveryAddress'],
+          );
+        },
         '/tracking':
             (context) => const DeliveryTrackingScreen(
               totalAmount: 0,
@@ -73,7 +82,25 @@ class GroceryApp extends StatelessWidget {
         '/history': (context) => const OrderHistoryScreen(),
         '/rating':
             (context) => const RatingScreen(orderNumber: '', totalAmount: 0),
-        '/test': (context) => const TestFlowScreen(),
+        '/category_products': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+          return CategoryProductsScreen(
+            categoryId: args['categoryId'] ?? 0,
+            categoryTitle: args['categoryTitle'] ?? '',
+            categoryImageUrl: args['categoryImageUrl'],
+          );
+        },
+        '/all_products': (context) => CategoryProductsScreen(
+              categoryId: -1,
+              categoryTitle: 'Todos los productos',
+              categoryImageUrl: null,
+            ),
+        '/all_promos': (context) => CategoryProductsScreen(
+              categoryId: -2,
+              categoryTitle: 'Promociones',
+              categoryImageUrl: 'https://www.prexus.co/uploads/1/3/0/6/13063909/promociones_orig.jpg',
+            ),
+        '/address_management': (context) => const AddressManagementScreen(),
       },
     );
   }
