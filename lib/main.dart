@@ -53,8 +53,7 @@ class GroceryApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      // home: const SplashScreen(),
-      home: const MainScreen(),
+      home: const SplashScreen(),
       routes: {
         '/main': (context) => const MainScreen(),
         '/cart': (context) => const CartScreen(),
